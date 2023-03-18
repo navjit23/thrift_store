@@ -1,0 +1,1 @@
+-- this will contain all the changes made (hopefully) with every new version of a commit or when some major change occurs ---

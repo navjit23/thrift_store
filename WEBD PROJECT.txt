@@ -1,0 +1,39 @@
+---PLEASE IGONORE THIS FILE ---
+
+--- THIS INCLUDES MY IDEAS, SUGGESTONS AND UPCOMING UPDATES( hopefully) ---
+
+
+
+addd image to product
+move color to product
+start with prodcut , categories and user table
+add user table that will have admin access and register users maybe later
+non registereed users can add comments
+admin can del comments 
+
+
+
+FILES TO CREATE
+
+--V1--
+authenticate
+connect
+index(home page)
+market
+view (view the item)
+post(to add products)
+contact us( have maps link and all stuff)
+
+--V2--
+edit( to edit something from product)
+add social handles
+add admin access
+
+--V3--
+they contact us to sell stuff ( maybe a form ) 
+to buy stuff( create price and check out page)
+add reviews
+
+--V4--
+have registered users ( save their info for easy checkout)
+have q&a section
