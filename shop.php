@@ -3,7 +3,7 @@
 require('connect.php');
 
 // sql command written
-$products = "SELECT * FROM "products" ORDER BY date DESC LIMIT 5";
+$products = "SELECT * FROM products  LIMIT 5";
 
 // preparring sql for executoin
 $statement = $db->prepare($products);
@@ -25,16 +25,18 @@ $statement->execute();
 </head>
 <body>
     <!-- have a llist of available products--->
+    <?php while($row =$statement->fetch()): ?>
     <!--image, title, company, price, condition -->
     <div id= "product_div">
         <img src="#" alt="image here">    
         <div>
-            <h3>name</h3>
-            <h2>company</h2>
-            <h2>conditionn</h2>
-            <h3>price</h3>
+            <a href="#"><h3> <?= $row['name'] ?> </h3></a> 
+            <h2><?= $row['company'] ?></h2>
+            <h2><?= $row['item_condition'] ?></h2>
+            <h3><?= $row['price'] ?></h3>
 
         </div>
     </div>
+    <?php endwhile ?>
 </body>
 </html>

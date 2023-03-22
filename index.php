@@ -21,7 +21,7 @@
     <ul>
         <li><a href="#">Home</a></li>
         <li><a href="shop.php">Shop</a></li>
-        <li><a href="#">Sell / Donate</a></li>
+        <li><a href="new_item.php">Sell / Donate</a></li>
         <li><a href="#">Contact Us</a></li>
         <li><a href="#">Store Location</a></li>
     </ul>

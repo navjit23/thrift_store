@@ -40,3 +40,16 @@ add reviews
 --V4--
 have registered users ( save their info for easy checkout)
 have q&a section
+
+
+
+
+	React component. Find a way to use your React skills and build a component that will work within the scope of your project. Maybe a mobile version of one section of your site?
+
+
+
+
+
+server:
+username: localuser1
+pass: password01
