@@ -28,7 +28,7 @@ $statement->execute();
     <?php while($row =$statement->fetch()): ?>
     <!--image, title, company, price, condition -->
     <div id= "product_div">
-        <img src="#" alt="image here">    
+        <img src=<?= $row['image'] ?> alt="image here">    
         <div>
             <a href="#"><h3> <?= $row['name'] ?> </h3></a> 
             <h2><?= $row['company'] ?></h2>

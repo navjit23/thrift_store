@@ -15,6 +15,7 @@ admin can del comments
 
 we can use lightbox maybe 
 USE BOOTSTRAP!!!!!!!!!!!!
+create templates for header and footer
 
 FILES TO CREATE
 
@@ -31,6 +32,7 @@ contact us( have maps link and all stuff)
 edit( to edit something from product)
 add social handles
 add admin access
+voluunteer page (make a form)( dump contact us, move and stuff to store locattor)
 
 --V3--
 they contact us to sell stuff ( maybe a form ) 

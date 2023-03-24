@@ -16,7 +16,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     // build a sql query with placeholders
-    $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description) ";
+    $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description, image) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description, :image) ";
     $statement= $db->prepare($query);
 
     // bind values to placeholders
@@ -26,6 +26,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $statement->bindValue(':rarity', $rarity);
     $statement->bindValue(':price', $price);
     $statement->bindValue(':color', $color);
+    $statement->bindValue(':image', $image);
     $statement->bindValue(':description', $description);
 
      //  Execute the INSERT.
@@ -51,7 +52,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
    
 
 
-    <form action="index.php" method="post">
+    <form action="new_item.php" method="post">
         <label for="productName">Name</label>
         <input type="text" name="productName">
 
