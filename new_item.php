@@ -1,6 +1,7 @@
 <?php 
 
 require('connect.php');
+require('authenticate.php');
 
 if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     
@@ -13,7 +14,66 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
+   
+
+    // Uploading an image
+ 
+
+    // file_upload_path() - Safely build a path String that uses slashes appropriate for our OS.
+    // Default upload path is an 'uploads' sub-folder in the current folder.
+    function file_upload_path($original_filename, $upload_subfolder_name = 'uploads') {
+        $current_folder = dirname(__FILE__);
+        
+        // Build an array of paths segment names to be joins using OS specific slashes.
+        $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
+        
+        // The DIRECTORY_SEPARATOR constant is OS specific.
+        return join(DIRECTORY_SEPARATOR, $path_segments);
+     }
+ 
+     // file_is_an_image() - Checks the mime-type & extension of the uploaded file for "image-ness".
+     function file_is_an_image($temporary_path, $new_path) {
+         $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
+         $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
+         
+         $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
+         $actual_mime_type        = getimagesize($temporary_path)['mime'];
+         
+         $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
+         $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
+         
+         return $file_extension_is_valid && $mime_type_is_valid;
+     }
+     
+     $file_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
+     $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
+ 
+     if ($file_upload_detected) { 
+         $file_filename        = $_FILES['image']['name'];
+         $temporary_file_path  = $_FILES['image']['tmp_name'];
+         $new_file_path        = file_upload_path($file_filename);
+
+        
+        // file is an image
+        if (file_is_an_image($temporary_file_path, $new_file_path)) {
+             move_uploaded_file($temporary_file_path, $new_file_path);
+             echo"it is an image";
+         }
+         else{
+            echo" Filetype not valid";
+         }
+
+
+     }
+     else{
+        echo" Filetype not valid";
+     }
+
+
+// yet to implement a logic file is not an image the query should stop and error pop on screen
+
+    
 
     // build a sql query with placeholders
     $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description, image) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description, :image) ";
@@ -26,7 +86,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $statement->bindValue(':rarity', $rarity);
     $statement->bindValue(':price', $price);
     $statement->bindValue(':color', $color);
-    $statement->bindValue(':image', $image);
+    $statement->bindValue(':image', $file_filename);
     $statement->bindValue(':description', $description);
 
      //  Execute the INSERT.
@@ -48,11 +108,26 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     <title>My Blog Post!</title>
 </head>
 <body>
+<header>
+    <!--- nav bar and other stuff on top-->
+    <!-- put a logo and social handles-->
+    <!-- nav bar-->
+    <div id= "main_nav">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="shop.php">Shop</a></li>
+        <li><a href="new_item.php">Sell / Donate</a></li>
+        <li><a href="contact_us.php">Contact Us</a></li>
+        <li><a href="edit.php">Store Location</a></li>
+    </ul>
+    </div>
+
+</header>
     
    
 
 
-    <form action="new_item.php" method="post">
+    <form action="new_item.php" method="post" enctype="multipart/form-data"> 
         <label for="productName">Name</label>
         <input type="text" name="productName">
 
@@ -74,13 +149,13 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <label for="color">Color</label>
         <input type="text" name="color">
 
-        <label for="image">Image URL </label> <!--- create a dropbox or something to uplload images--->
-        <input type="text" name="image">
+        <label for="image">Image </label> <!---- needs validation and rn cannot be empty----->
+        <input type="file" name="image">
 
         <label for="description">Description</label>
         <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
-        <input type="submit">
+        <input type="submit" value="Add Product">
         
     </form>
     
