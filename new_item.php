@@ -58,7 +58,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         // file is an image
         if (file_is_an_image($temporary_file_path, $new_file_path)) {
              move_uploaded_file($temporary_file_path, $new_file_path);
-             echo"it is an image";
+             header("Location: fileresize.php?path=$new_file_path");
          }
          else{
             echo" Filetype not valid";

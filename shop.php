@@ -4,22 +4,22 @@ require('connect.php');
 
 // sql command written
 if(isset($_POST['byName'])){
-    $products = "SELECT * FROM products ORDER BY `name` DESC LIMIT 5";
+    $products = "SELECT * FROM products ORDER BY `name` DESC LIMIT 10";
     $statement = $db->prepare($products);
     $statement->execute();
 }
 else if(isset($_POST['byCost'])){
-    $products = "SELECT * FROM products ORDER BY `price` DESC LIMIT 5";
+    $products = "SELECT * FROM products ORDER BY `price` DESC LIMIT 10";
     $statement = $db->prepare($products);
     $statement->execute();
 }
 else if(isset($_POST['byDate'])){
-    $products = "SELECT * FROM products LIMIT 5";
+    $products = "SELECT * FROM products LIMIT 10";
     $statement = $db->prepare($products);
     $statement->execute();
 }
 else{
-    $products = "SELECT * FROM products  LIMIT 5";
+    $products = "SELECT * FROM products  LIMIT 10";
     $statement = $db->prepare($products);
     $statement->execute();
 }
@@ -45,7 +45,7 @@ else{
     </form>
     <?php while($row =$statement->fetch()): ?>
     <!--image, title, company, price, condition -->
-    <div id= "product_div">
+    <div id= "product_div" style="border:solid 1px black; margin:5px">
          
         <div>
             <a href="view_item.php?id=<?=$row['product_id']?>"><h3> <?= $row['name'] ?> </h3></a> 

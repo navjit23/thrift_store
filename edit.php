@@ -45,14 +45,14 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $query = "UPDATE products SET name = :name, company= :company, item_condition= :condition, rarity= :rarity, price = :price, `description` = :description  WHERE product_id= :id;";
 
     if(isset($_POST['del_image'])){
-        $query .= "UPDATE products SET image is NULL WHERE product_id=:id;";
-        echo"bxbfdhbhdsbhbc";
+        $query .= "UPDATE products SET image = NULL WHERE product_id=:id;";
+        // for future delete the image from db
+        
     }
 
     if(trim($filename) != '' ){
         // for future delete the image from db if its UNIQUE 
         $query .= "UPDATE products SET image= :image WHERE product_id= :id;";
-        echo"bfabhcdbsdcdcu";
     }
 
     
@@ -170,7 +170,8 @@ elseif(isset($_GET['id'])){
         <label for="new_image">Click Here to Change the Image</label>
         <input type="file" name="new_image" id="new_image">
 
-        <input type="button" name="del_image" value="Delete Image">
+        <label for="del_image">Check Here to Delete Image: </label>
+        <input type="checkbox" name="del_image" id="del_image" value="delete_image">;
 
 
         <label for="description">Description</label>
