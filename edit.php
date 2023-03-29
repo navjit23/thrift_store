@@ -27,7 +27,7 @@ if(isset($_POST['delete'])){
 
 
 //TO SAVE CHANGES TO BLOG
-if($_POST && trim($_POST['name']) != '' && trim($_POST['price']) != '' ){
+if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     
     // sanitize the data
     $productName = filter_input(INPUT_POST, 'productName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -38,18 +38,41 @@ if($_POST && trim($_POST['name']) != '' && trim($_POST['price']) != '' ){
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 
+    $filename = $_FILES['new_image']['name'];
+    
+
     // build a sql query with placeholders
-    $query = "UPDATE products SET name = :name, company= :company, condition= :condition, rarity= :rarity, price = :price, `description` = :description  WHERE product_id= :id";
+    $query = "UPDATE products SET name = :name, company= :company, item_condition= :condition, rarity= :rarity, price = :price, `description` = :description  WHERE product_id= :id;";
+
+    if(isset($_POST['del_image'])){
+        $query .= "UPDATE products SET image is NULL WHERE product_id=:id;";
+        echo"bxbfdhbhdsbhbc";
+    }
+
+    if(trim($filename) != '' ){
+        // for future delete the image from db if its UNIQUE 
+        $query .= "UPDATE products SET image= :image WHERE product_id= :id;";
+        echo"bfabhcdbsdcdcu";
+    }
+
+    
+
+    
+    
     $statement= $db->prepare($query);
 
     // bind values to placeholders
     $statement->bindValue(':name', $productName);
-    $statement->bindValue(':item_condition', $condition);
+    $statement->bindValue(':condition', $condition);
     $statement->bindValue(':company', $company);
     $statement->bindValue(':rarity', $rarity);
     $statement->bindValue(':price', $price);
     $statement->bindValue(':description', $description);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+    if(trim($filename) != '' ){
+        $statement->bindValue(':image', $filename);
+    }
 
      //  Execute the INSERT.
         //  execute() will check for possible SQL injection and remove if necessary
@@ -116,7 +139,7 @@ elseif(isset($_GET['id'])){
 
 
     <?php if($id): ?>
-        <form action="new_item.php" method="post" enctype="multipart/form-data"> 
+        <form action="edit.php" method="post" enctype="multipart/form-data"> 
 
         <input type="hidden" name="id" value="<?= $row['product_id'] ?>">
 
@@ -127,7 +150,7 @@ elseif(isset($_GET['id'])){
         <input type="text" name="company" value="<?= $row['company'] ?>">
 
         <label for="condition">Condition</label>
-        <input type="int" name="condition" value="<?= $row['condition'] ?>">
+        <input type="int" name="condition" value="<?= $row['item_condition'] ?>">
 
         <label for="rarity">Rarity</label>
         <input type="int" name="rarity" value="<?= $row['rarity'] ?>">
@@ -140,6 +163,14 @@ elseif(isset($_GET['id'])){
 
         <label for="color">Color</label>
         <input type="text" name="color" value="<?= $row['color'] ?>">
+    
+        <?php $folder = "./uploads/". $row['image']; ?>
+        <img src="<?= $folder ?>" alt="iamge here">
+
+        <label for="new_image">Click Here to Change the Image</label>
+        <input type="file" name="new_image" id="new_image">
+
+        <input type="button" name="del_image" value="Delete Image">
 
 
         <label for="description">Description</label>
@@ -151,8 +182,8 @@ elseif(isset($_GET['id'])){
 
     </form>
 
-    <?php else : ?>
-        <?php header("Location: index.php"); ?>
+    <?php /* else : ?>
+        <?php header("Location: index.php"); */?>
 
     <?php endif ?>
 

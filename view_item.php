@@ -49,6 +49,7 @@ if(isset($_GET['id'])){
 </header>
     <?php if($id): ?>
         <div>
+        <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>
         <h1><?= $row['name'] ?></h1>
         <h3><?= $row['brand'] ?></h3>
         <h2><?= $row['price'] ?></h2>
@@ -64,3 +65,5 @@ if(isset($_GET['id'])){
     <?php endif ?>
 </body>
 </html>
+
+

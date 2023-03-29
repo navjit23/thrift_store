@@ -16,6 +16,7 @@ admin can del comments
 we can use lightbox maybe 
 USE BOOTSTRAP!!!!!!!!!!!!
 create templates for header and footer
+sav imave in default, then resize it and then delete og image
 
 FILES TO CREATE
 

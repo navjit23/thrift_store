@@ -48,7 +48,7 @@ else{
     <div id= "product_div">
          
         <div>
-            <a href="#"><h3> <?= $row['name'] ?> </h3></a> 
+            <a href="view_item.php?id=<?=$row['product_id']?>"><h3> <?= $row['name'] ?> </h3></a> 
             <h2><?= $row['company'] ?></h2>
             <h2><?= $row['item_condition'] ?></h2>
             <h3><?= $row['price'] ?></h3>
