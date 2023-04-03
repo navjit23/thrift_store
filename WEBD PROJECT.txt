@@ -4,8 +4,7 @@
 
 
 
-addd image to product
-move color to product
+
 start with prodcut , categories and user table
 add user table that will have admin access and register users maybe later
 non registereed users can add comments
@@ -16,7 +15,6 @@ admin can del comments
 we can use lightbox maybe 
 USE BOOTSTRAP!!!!!!!!!!!!
 create templates for header and footer
-sav imave in default, then resize it and then delete og image
 
 FILES TO CREATE
 
@@ -49,7 +47,13 @@ have q&a section
 
 	React component. Find a way to use your React skills and build a component that will work within the scope of your project. Maybe a mobile version of one section of your site?
 
-
+comments:
+cm id
+comment
+pd id
+user id
+name
+email address
 
 
 

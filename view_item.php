@@ -1,25 +1,63 @@
 <?php
 // TO LOAD A BLOG
-
+require('connect.php');
 
 if(isset($_GET['id'])){
-    $blogs = "SELECT * FROM products WHERE product_id=:id "; 
-    $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
+     
+$id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$blogs = "SELECT * FROM products WHERE product_id=:id ";
     // preparring sql for executoin
-    $statement = $db->prepare($blogs);
+$statement = $db->prepare($blogs);
 
     //bind
-    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+$statement->bindValue(':id', $id, PDO::PARAM_INT);
 
     //executing sql
-    $statement->execute();
-    $row = $statement->fetch();
-    }
-    else{
-        $id= false;
+$statement->execute();
+$row = $statement->fetch();
+if(isset($_POST['add_comment'])){
+    echo"nkj";
+    //adding_comment();
+    //header("Location:view_item.php");
+}
+}
+
+else{
+    $id= false;
+}
+
+function loading_comments(){
+    return false; // yet to build
+}
+
+function adding_comment(){
+
+    //check if user is logged in
+    //check for required info
+    if ($_POST['user_comment'] && $_POST['user_name'] && $_POST['user_email']){
+
+        //sanitizing all the informatiom
+         
+        $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $user_email = filter_input(INPUT_POST, 'user_email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $rating = filter_input(INPUT_POST, 'rating', FILTER_SANITIZE_NUMBER_INT);
+        $product_id = filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_NUMBER_INT);
+        $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
+
+        //if all good, add the comment inn db
+
+        $comment = "INSERT INTO comments(comment, product_id, rating, user_name, user_email) VALUES ($comment, $product_id, $rating, $user_name, $user_email) ";
+        $statement1 = $db->prepare($comment);
+        $statement->execute();
+
+        
+
     }
 
+
+    
+}
 
 ?>
 
@@ -29,6 +67,7 @@ if(isset($_GET['id'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <title>product name here</title>
 </head>
 <body>
@@ -51,17 +90,44 @@ if(isset($_GET['id'])){
         <div>
         <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>
         <h1><?= $row['name'] ?></h1>
-        <h3><?= $row['brand'] ?></h3>
+        <h3><?= $row['company'] ?></h3>
         <h2><?= $row['price'] ?></h2>
+    
+        <?php $folder = "./uploads/". $row['image']; ?>
+        <img src="<?= $folder ?>" alt="iamge here">
         </div>
         <div>
             <p><?= $row['description'] ?></p>
         </div>
         <!-- future comments / reviews here -->
 
+        <!--VIEW COMMENTS -->
+        <!--ADD COMMENTS (for future, js should load this box when user click on add a comment also have an option for image upload-->
+        <form action="view_item.php" method="post">
+            <h2>Add a Comment/ Write a review</h2>
+
+            <label for="user_name">User Name *</label>
+            <input type="text" name="user_name" >
+
+            <label for="user_email">email *</label>
+            <input type="email" name="user_email" >
+        
+            <label for="rating">Rating</label>
+            <input type="int" name="rating">
+
+            <label for="user_comment">Comment</label>
+            <textarea name="user_comment" cols="30" rows="10"></textarea>
+
+            <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
+            <input type="hidden" name="user_id">
+            <input type="submit" value="Add Comment" name="add_comment">
+
+        </form>
+
 
     <?php else : ?>
-        <?php header("Location: index.php"); ?>
+        <h1>jh</h1>
+        <?php //header("Location: index.php"); ?>
     <?php endif ?>
 </body>
 </html>
