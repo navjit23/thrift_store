@@ -1,15 +1,15 @@
 <?php
-//require('connect.php');
+require('connect.php');
 
 function adding_comment(){
-    require('connect.php');
+    global $db;
 
     //check if user is logged in
     //check for required info
   if ($_POST['user_comment'] && $_POST['user_name'] && $_POST['user_email']){
 
         //sanitizing all the informatiom
-         
+          
         $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $user_email = filter_input(INPUT_POST, 'user_email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $comment1 = filter_input(INPUT_POST, 'user_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -36,10 +36,11 @@ function adding_comment(){
 }
 
 function loading_page(){
-    require('connect.php');
+    global $db;
 
     $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     $blogs = "SELECT * FROM products WHERE product_id=:id ;";
+    //$blogs .= "SELECT * FROM comments WHERE  product_id= :id ;"
         // preparring sql for executoin
     $statement = $db->prepare($blogs);
     
@@ -52,30 +53,42 @@ function loading_page(){
     return $row1;
 
 }
-/*
+
+
 function loading_comments(){
-    require('connect.php');
+    global $db;
+
     $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    $load_comments = "SELECT * FROM comments ;"
-    $statement2 = $db->prepare($load_comments);
-    $statement2->bindValue(':id', $id, PDO::PARAM_INT);
-    $statement2->execute();
-    $row2 = $statement->fetch();
-    return $row2;
+    $load_comments = "SELECT * FROM comments WHERE  product_id= :id ;";
+        // preparring sql for executoin
+    $statement = $db->prepare($load_comments);
+    
+        //bind
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    
+        //executing sql
+    $statement->execute();
+    //$row2 = $statement->fetch();
+    $comments = [];
+    while ($x = $statement->fetch() ){
+        $comments[] = $x;
+        
+
+    }
+    
+    return $comments;
+    
 }
-*/
+
 
 if(isset($_GET['id'])){
     $row = loading_page();
-    //$row3 = loading_comments();
+    $row3 = loading_comments();
     
 }
 
 
 
-if(isset($_POST['add_comment'])){
-   adding_comment();
-}
 ?>
 
 
@@ -94,7 +107,23 @@ if(isset($_POST['add_comment'])){
     <title>product name here</title>
 </head>
 <body>
-<div>
+<header>
+    <!--- nav bar and other stuff on top-->
+    <!-- put a logo and social handles-->
+    <!-- nav bar-->
+    <div id= "main_nav">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="shop.php">Shop</a></li>
+        <li><a href="new_item.php">Sell / Donate</a></li>
+        <li><a href="contact_us.php">Contact Us</a></li>
+        <li><a href="edit.php">Store Location</a></li>
+    </ul>
+    </div>
+
+</header>
+    <?php if($_GET['id']): ?>
+        <div>
         <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>
         <h1><?= $row['name'] ?></h1>
         <h3><?= $row['company'] ?></h3>
@@ -105,16 +134,25 @@ if(isset($_POST['add_comment'])){
         </div>
         <div>
             <p><?= $row['description'] ?></p>
-</div>
+        </div>
+        <!-- future comments / reviews here -->
 
-<div>
-    <?php foreach ($row2 as $loaded_comment): ?>
-        <h2><?= $loaded_comment['user_name'] ?></h2>
-</div>
+        <!--VIEW COMMENTS -->
+        <!--- COMMENT BOX--->
+        <?php foreach ($row3 as $commentData): ?>
+        <div>
+    
+        <h2><?= $commentData['user_name'] ?></h2>
+        <p><?= $commentData['comment'] ?></p>
+        <h6>date here**********</h6>
+        
+    
+        </div>
+        <?php endforeach ?>
 
-
-
-<form action="view.php" method="post">
+        
+        <!--ADD COMMENTS (for future, js should load this box when user click on add a comment also have an option for image upload-->
+        <form action="view_item.php" method="post">
             <h2>Add a Comment/ Write a review</h2>
 
             <label for="user_name">User Name *</label>
@@ -128,12 +166,18 @@ if(isset($_POST['add_comment'])){
 
             <label for="user_comment">Comment</label>
             <textarea name="user_comment" cols="30" rows="10"></textarea>
-            
-            <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
 
-            
+            <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
+            <input type="hidden" name="user_id">
             <input type="submit" value="Add Comment" name="add_comment">
 
         </form>
+
+
+    <?php else : ?>
+        
+        <?php header("Location: index.php"); ?>
+    <?php endif ?>
 </body>
+</html>
 </html>

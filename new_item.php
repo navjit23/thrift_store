@@ -55,7 +55,7 @@ function upload_new_item($image_file){
 
 
     // build a sql query with placeholders
-    $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description, image) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description, :image) ";
+    $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description, image, category_id) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description, :image, :category) ";
     $statement= $db->prepare($query);
 
     // bind values to placeholders
@@ -65,6 +65,7 @@ function upload_new_item($image_file){
     $statement->bindValue(':rarity', $rarity);
     $statement->bindValue(':price', $price);
     $statement->bindValue(':color', $color);
+    $statement->bindValue(':category', $category);
     $statement->bindValue(':image', $image_file);
     $statement->bindValue(':description', $description);
 
