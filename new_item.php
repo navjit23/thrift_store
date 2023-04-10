@@ -77,9 +77,26 @@ function upload_new_item($image_file){
 }
 
 
-// yet to implement a logic file is not an image the query should stop and error pop on screen
+// loading the categories
+function loading_categories(){
+    global $db;
 
+    $query = "SELECT * FROM categories ;";
+        // preparring sql for executoin
+    $statement = $db->prepare($query);
+    
+        //executing sql
+    $statement->execute();
+    $categories = [];
+    while ($x = $statement->fetch() ){
+        $categories[] = $x;
+        
+    }
+    
+    return $categories;
+}
 
+$row = loading_categories();
 
 if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     
@@ -159,7 +176,11 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <input type="int" name="price">
 
         <label for="category">Category</label> <!-- maybe createa   a dropdown-->
-        <input type="text" name="category">
+        <select name="category">
+            <?php foreach($row as $category_type): ?>
+                <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+            <?php endforeach ?>
+        </select>
 
         <label for="color">Color</label>
         <input type="text" name="color">
