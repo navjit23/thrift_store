@@ -1,1 +1,17 @@
 -- this will contain all the changes made (hopefully) with every new version of a commit or when some major change occurs ---
+
+to do by 13April:
+create CATEGORIES table
+add categories 2.4, 2.8, 3.2(with search)
+comments: 2.5, 2.9
+
+fix bugs: 
+search bar on shop page,
+uploading images 6.1,
+
+
+for next week
+images 6.2, 6.4
+create USER table
+users 7.1, 7.4, 7.5, 7.2
+passwords: 7.3

@@ -1,64 +1,95 @@
 <?php
-// TO LOAD A BLOG
 require('connect.php');
 
-if(isset($_GET['id'])){
-     
-$id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-$blogs = "SELECT * FROM products WHERE product_id=:id ";
-    // preparring sql for executoin
-$statement = $db->prepare($blogs);
+// TO LOAD A BLOG
+function loading_page(){
+    global $db;
 
-    //bind
-$statement->bindValue(':id', $id, PDO::PARAM_INT);
+    $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $blogs = "SELECT * FROM products WHERE product_id=:id ;";
+        // preparring sql for executoin
+    $statement = $db->prepare($blogs);
+    
+        //bind
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    
+        //executing sql
+    $statement->execute();
+    $row1 = $statement->fetch();
+    return $row1;
 
-    //executing sql
-$statement->execute();
-$row = $statement->fetch();
-if(isset($_POST['add_comment'])){
-    echo"nkj";
-    //adding_comment();
-    //header("Location:view_item.php");
-}
-}
-
-else{
-    $id= false;
 }
 
 function loading_comments(){
-    return false; // yet to build
+    global $db;
+
+    $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $load_comments = "SELECT * FROM comments WHERE  product_id= :id ;";
+        // preparring sql for executoin
+    $statement = $db->prepare($load_comments);
+    
+        //bind
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    
+        //executing sql
+    $statement->execute();
+    //$row2 = $statement->fetch();
+    $comments = [];
+    while ($x = $statement->fetch() ){
+        $comments[] = $x;
+        
+
+    }
+    
+    return $comments;
+    
 }
 
+
 function adding_comment(){
+    global $db;
 
     //check if user is logged in
     //check for required info
-    if ($_POST['user_comment'] && $_POST['user_name'] && $_POST['user_email']){
+  if ($_POST['user_comment'] && $_POST['user_name'] && $_POST['user_email']){
 
         //sanitizing all the informatiom
          
         $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $user_email = filter_input(INPUT_POST, 'user_email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $comment1 = filter_input(INPUT_POST, 'user_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $rating = filter_input(INPUT_POST, 'rating', FILTER_SANITIZE_NUMBER_INT);
         $product_id = filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_NUMBER_INT);
         $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
 
         //if all good, add the comment inn db
+        // productt id doesnt work code broken
 
-        $comment = "INSERT INTO comments(comment, product_id, rating, user_name, user_email) VALUES ($comment, $product_id, $rating, $user_name, $user_email) ";
+        $comment = "INSERT INTO comments(comment, rating, user_name, user_email, product_id) VALUES (:comment1, :rating, :user_name, :user_email, :product_id); ";
         $statement1 = $db->prepare($comment);
-        $statement->execute();
 
-        
+        $statement1->bindValue(':comment1', $comment1);
+        $statement1->bindValue(':rating', $rating);
+        $statement1->bindValue(':user_name', $user_name);
+        $statement1->bindValue(':user_email', $user_email);
+        $statement1->bindValue(':product_id', $product_id);
 
+        if($statement1->execute()){
+            echo "Success";
+            header("Location: view_item.php?id=$product_id");
+        }
     }
-
-
     
 }
 
+if(isset($_GET['id'])){
+    $row = loading_page();
+    $row3 = loading_comments();    
+}
+
+if(isset($_POST['add_comment'])){
+   adding_comment();
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +117,7 @@ function adding_comment(){
     </div>
 
 </header>
-    <?php if($id): ?>
+    <?php if($_GET['id']): ?>
         <div>
         <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>
         <h1><?= $row['name'] ?></h1>
@@ -99,11 +130,24 @@ function adding_comment(){
         <div>
             <p><?= $row['description'] ?></p>
         </div>
-        <!-- future comments / reviews here -->
+        
 
         <!--VIEW COMMENTS -->
+        <!--- COMMENT BOX--->
+        <?php foreach ($row3 as $commentData): ?>
+        <div>
+    
+        <h2><?= $commentData['user_name'] ?></h2>
+        <p><?= $commentData['comment'] ?></p>
+        <h6>date here**********</h6>
+        
+    
+        </div>
+        <?php endforeach ?>
+
+        
         <!--ADD COMMENTS (for future, js should load this box when user click on add a comment also have an option for image upload-->
-        <form action="view_item.php" method="post">
+        <form  method="post">
             <h2>Add a Comment/ Write a review</h2>
 
             <label for="user_name">User Name *</label>
@@ -126,8 +170,8 @@ function adding_comment(){
 
 
     <?php else : ?>
-        <h1>jh</h1>
-        <?php //header("Location: index.php"); ?>
+        
+        <?php header("Location: index.php"); ?>
     <?php endif ?>
 </body>
 </html>
