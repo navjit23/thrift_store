@@ -7,8 +7,11 @@ comments: 2.5, 2.9
 
 fix bugs: 
 search bar on shop page,
-uploading images 6.1,
-
+pages with 0 comments show error DONE
+comments should be in desc order DONE
+uploading images 6.1, DONE
+can only upload png
+add date to new products aswell
 
 for next week
 images 6.2, 6.4

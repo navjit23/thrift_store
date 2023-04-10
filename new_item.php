@@ -3,77 +3,56 @@
 require('connect.php');
 require('authenticate.php');
 
-if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
+
+// Uploading an image
+
+
+// file_upload_path() - Safely build a path String that uses slashes appropriate for our OS.
+// Default upload path is an 'uploads' sub-folder in the current folder.
+function file_upload_path($original_filename, $upload_subfolder_name = 'uploads') {
+    $current_folder = dirname(__FILE__);
     
+    // Build an array of paths segment names to be joins using OS specific slashes.
+    $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
+    
+    // The DIRECTORY_SEPARATOR constant is OS specific.
+    return join(DIRECTORY_SEPARATOR, $path_segments);
+}
+
+// file_is_an_image() - Checks the mime-type & extension of the uploaded file for "image-ness".
+function file_is_an_image($temporary_path, $new_path) {
+    $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
+    $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
+    
+    $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
+    $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
+
+    $mime_type_is_valid = false;
+    if($file_extension_is_valid){
+        $actual_mime_type        = getimagesize($temporary_path)['mime'];
+        $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
+    }
+    
+    
+    return $file_extension_is_valid && $mime_type_is_valid;
+}
+        
+
+
+// upload_new_item() - gets the values from the form and uploads data to database on success
+function upload_new_item($image_file){
+
+    global $db;
     // sanitize the data
     $productName = filter_input(INPUT_POST, 'productName', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $conditon = filter_input(INPUT_POST, 'condition', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $condition = filter_input(INPUT_POST, 'condition', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $rarity = filter_input(INPUT_POST, 'rarity', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    
-   
 
-    // Uploading an image
- 
-
-    // file_upload_path() - Safely build a path String that uses slashes appropriate for our OS.
-    // Default upload path is an 'uploads' sub-folder in the current folder.
-    function file_upload_path($original_filename, $upload_subfolder_name = 'uploads') {
-        $current_folder = dirname(__FILE__);
-        
-        // Build an array of paths segment names to be joins using OS specific slashes.
-        $path_segments = [$current_folder, $upload_subfolder_name, basename($original_filename)];
-        
-        // The DIRECTORY_SEPARATOR constant is OS specific.
-        return join(DIRECTORY_SEPARATOR, $path_segments);
-     }
- 
-     // file_is_an_image() - Checks the mime-type & extension of the uploaded file for "image-ness".
-     function file_is_an_image($temporary_path, $new_path) {
-         $allowed_mime_types      = ['image/gif', 'image/jpeg', 'image/png'];
-         $allowed_file_extensions = ['gif', 'jpg', 'jpeg', 'png'];
-         
-         $actual_file_extension   = pathinfo($new_path, PATHINFO_EXTENSION);
-         $actual_mime_type        = getimagesize($temporary_path)['mime'];
-         
-         $file_extension_is_valid = in_array($actual_file_extension, $allowed_file_extensions);
-         $mime_type_is_valid      = in_array($actual_mime_type, $allowed_mime_types);
-         
-         return $file_extension_is_valid && $mime_type_is_valid;
-     }
-     
-     $file_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
-     $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
- 
-     if ($file_upload_detected) { 
-         $file_filename        = $_FILES['image']['name'];
-         $temporary_file_path  = $_FILES['image']['tmp_name'];
-         $new_file_path        = file_upload_path($file_filename);
-
-        
-        // file is an image
-        if (file_is_an_image($temporary_file_path, $new_file_path)) {
-             move_uploaded_file($temporary_file_path, $new_file_path);
-             header("Location: fileresize.php?path=$new_file_path");
-         }
-         else{
-            echo" Filetype not valid";
-         }
-
-
-     }
-     else{
-        echo" Filetype not valid";
-     }
-
-
-// yet to implement a logic file is not an image the query should stop and error pop on screen
-
-    
 
     // build a sql query with placeholders
     $query = "INSERT INTO products( name, item_condition,company, rarity, price, color, description, image) VALUES ( :name, :item_condition, :company, :rarity, :price, :color, :description, :image) ";
@@ -86,14 +65,49 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $statement->bindValue(':rarity', $rarity);
     $statement->bindValue(':price', $price);
     $statement->bindValue(':color', $color);
-    $statement->bindValue(':image', $file_filename);
+    $statement->bindValue(':image', $image_file);
     $statement->bindValue(':description', $description);
 
-     //  Execute the INSERT.
-        //  execute() will check for possible SQL injection and remove if necessary
+    //  Execute the INSERT.
         if($statement->execute()){
             echo "Success";
         }
+
+}
+
+
+// yet to implement a logic file is not an image the query should stop and error pop on screen
+
+
+
+if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
+    
+    // if uploaded file is not an image, make an alert that says that the uploaded file was not an image
+    //condition for image upload
+    $file_filename        = $_FILES['image']['name'];
+    $temporary_file_path  = $_FILES['image']['tmp_name'];    
+    $file_upload_detected = isset($_FILES['image']) && ($_FILES['image']['error'] === 0);
+    $upload_error_detected = isset($_FILES['image']) && ($_FILES['image']['error'] > 0);
+
+    if ($file_upload_detected) { 
+
+        if(file_is_an_image($temporary_file_path, $file_filename)){
+        $new_file_path  = file_upload_path($file_filename);
+        move_uploaded_file($temporary_file_path, $new_file_path);
+        upload_new_item($file_filename);
+        header("Location: fileresize.php?path=$new_file_path");
+        }
+        else{
+            //here should be a prompt and after wards normal file uploaded
+            upload_new_item(`NULL`);
+        }
+    }
+    else{
+        upload_new_item(`NULL`);
+    }
+
+    
+    
 }
 
 ?>
@@ -109,7 +123,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 </head>
 <body>
 <header>
-    <!--- nav bar and other stuff on top-->
+    <!-- nav bar and other stuff on top-->
     <!-- put a logo and social handles-->
     <!-- nav bar-->
     <div id= "main_nav">

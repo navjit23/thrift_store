@@ -41,6 +41,7 @@ add reviews
 --V4--
 have registered users ( save their info for easy checkout)
 have q&a section
+have  multiple images for an item
 
 
 

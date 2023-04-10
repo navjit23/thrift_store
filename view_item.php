@@ -24,7 +24,7 @@ function loading_comments(){
     global $db;
 
     $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    $load_comments = "SELECT * FROM comments WHERE  product_id= :id ;";
+    $load_comments = "SELECT * FROM comments WHERE  product_id= :id ORDER BY date DESC;";
         // preparring sql for executoin
     $statement = $db->prepare($load_comments);
     
@@ -134,17 +134,25 @@ if(isset($_POST['add_comment'])){
 
         <!--VIEW COMMENTS -->
         <!--- COMMENT BOX--->
-        <?php foreach ($row3 as $commentData): ?>
-        <div>
-    
-        <h2><?= $commentData['user_name'] ?></h2>
-        <p><?= $commentData['comment'] ?></p>
-        <h6>date here**********</h6>
-        
-    
-        </div>
-        <?php endforeach ?>
+        <div id="comment_box" style="border: 1px solid black">
+            
+            <?php if(count($row3) > 0):
+            foreach ($row3 as $commentData): ?>
+                <div>
+            
+                <h2><?= $commentData['user_name'] ?></h2>
+                <p><?= $commentData['comment'] ?></p>
+                <h6>date here**********</h6>
 
+                </div>
+            <?php endforeach;
+            else: ?>
+                <div>
+                    <h2>No comments here</h2>
+                </div>
+            <?php endif ?>
+
+        </div>
         
         <!--ADD COMMENTS (for future, js should load this box when user click on add a comment also have an option for image upload-->
         <form  method="post">

@@ -17,10 +17,10 @@ $search_value = $_POST['searchText'];
         $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%'  ORDER BY `price` DESC LIMIT 10";
     }
     else if($_POST['sort'] == 'byDate'){
-        $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%'  LIMIT 10";
+        $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' ORDER BY `date` LIMIT 10";
     }
     else{
-        $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' LIMIT 10";
+        $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' ORDER BY `date` LIMIT 10";
     }
 
 }
