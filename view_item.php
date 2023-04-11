@@ -38,7 +38,6 @@ function loading_comments(){
     while ($x = $statement->fetch() ){
         $comments[] = $x;
         
-
     }
     
     return $comments;
