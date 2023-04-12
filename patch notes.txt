@@ -10,7 +10,9 @@ search bar on shop page, DONE
 search types need to stick after i search
 no item found remaining
 can only upload png
-
+for all categories sort not working
+in edit page category and desription
+in the views also need the email, rating and user when applied
 
 for next week
 images 6.2, 6.4

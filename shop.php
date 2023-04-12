@@ -7,12 +7,11 @@ require('connect.php');
 
 
 // search Bar only search
-function search_bar_filter($search_value, $sortBy, $sortType){
+function search_bar_filter($search_value, $sortBy, $sortType, $category_id){
     global $db;
-    $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' ORDER BY $sortBy $sortType ;";
+    $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' AND category_id LIKE '$category_id' ORDER BY $sortBy $sortType ;";
 
     $statement = $db->prepare($products);
-    //$statement->bindValue(':search_value', $search_value);
     
     $statement->execute();
 
@@ -26,21 +25,46 @@ function search_bar_filter($search_value, $sortBy, $sortType){
 
 }
 
-// maybe create hyperlinks for categories and they filter automatically 
+
+// loading the categories
+function loading_categories(){
+    global $db;
+
+    $query = "SELECT * FROM categories ;";
+        // preparring sql for executoin
+    $statement = $db->prepare($query);
+    
+        //executing sql
+    $statement->execute();
+    $categories = [];
+    while ($x = $statement->fetch() ){
+        $categories[] = $x;
+        
+    }
+    
+    return $categories;
+}
 
 
-
+// maybe create hyperlinks for categories and they filter automatically USE GET ----
+// keep default id 0 else have category ids
 
 
 //maybe use session to savve  and load the radio selection
 //no items founds remaining
+
+
+// LOADING THE PAGE
+$categories1 = loading_categories();
+
 if($_POST){
 $search_value = $_POST['searchText'];
 $sortBy = $_POST['sort_by'];
 $sortType = $_POST['sort_type'];
+$categoryID = $_POST['category'];
 
 
-$row = search_bar_filter($search_value, $sortBy, $sortType);
+$row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);
 
 
 }
@@ -73,7 +97,7 @@ else{
     <title>Welcome to my Blog!</title>
 </head>
 <body>
-    <!-- have a llist of available products--->
+    
     <form action="" method="post">
         <label for="sort_by">Sort By</label>
         <select name="sort_by" >
@@ -89,9 +113,26 @@ else{
             <option value="DESC">desc</option>
         </select>
 
+        <label for="category">Category</label> 
+        <select name="category">
+            <option value=" "> ---All Categories--- </option>
+            <?php foreach($categories1 as $category_type): ?>
+                <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+            <?php endforeach ?>
+        </select>
+
         <input type="text" name="searchText" id="" placeholder="Type here to search">
         <input type="submit" value="Search" name="search">
     </form>
+
+    <div id="category_bar">
+        <ul>
+            <?php foreach ($categories1 as $category) : ?>
+                <li> <a href="<?= $category['category_id']?> "> <?= $category['category_name'] ?> </a> </li>
+            <?php endforeach ?>
+        </ul>
+
+    </div>
     <?php foreach ($row as $product): ?>
     <!--image, title, company, price, condition -->
     <div id= "product_div" style="border:solid 1px black; margin:5px">
