@@ -3,10 +3,54 @@
 require('connect.php');
 
 
-// sb sort and categories
 
 
-// search Bar only search
+// LOADING THE PAGE
+
+$categories1 = loading_categories();
+
+// check for GET value, if true category is filtered from here
+if($_GET){
+    $categoryID = $_GET['category_id'];
+}
+
+// gets executed when user clicks search 
+if($_POST){
+    $search_value = $_POST['searchText'];
+    $sortBy = $_POST['sort_by'];
+    $sortType = $_POST['sort_type'];
+
+    if(! $_GET){
+    $categoryID = $_POST['category'];
+    }
+
+    $row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);
+}
+
+// default page loadup with/without categories filtered
+else{
+    if($_GET){
+        $products = "SELECT * FROM products WHERE category_id = :category_id"; 
+        $statement = $db->prepare($products);
+        $statement->bindValue(':category_id', $categoryID);
+    }
+    else{
+        $products = "SELECT * FROM products LIMIT 10";
+        $statement = $db->prepare($products);
+    }
+    $statement->execute();
+    $results = [];
+    while ($x = $statement->fetch() ){
+        $results[] = $x;    
+    }
+    $row = $results;
+} 
+
+
+
+
+
+// search Bar function takes 4 inputs to filter data and return the query result in an array
 function search_bar_filter($search_value, $sortBy, $sortType, $category_id){
     global $db;
     
@@ -49,43 +93,8 @@ function loading_categories(){
     return $categories;
 }
 
-
-// maybe create hyperlinks for categories and they filter automatically USE GET ----
-// keep default id 0 else have category ids
-
-
 //maybe use session to savve  and load the radio selection
-//no items founds remaining
 
-
-// LOADING THE PAGE
-$categories1 = loading_categories();
-
-if($_POST){
-$search_value = $_POST['searchText'];
-$sortBy = $_POST['sort_by'];
-$sortType = $_POST['sort_type'];
-$categoryID = $_POST['category'];
-
-
-$row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);
-
-
-}
-else{
-    $products = "SELECT * FROM products LIMIT 10";
-    $statement = $db->prepare($products);
-    $statement->execute();
-    $results = [];
-    while ($x = $statement->fetch() ){
-        $results[] = $x;
-        
-    }
-    
-    $row = $results;
-} 
-
-    
 
 
 ?>
@@ -117,6 +126,8 @@ else{
             <option value="DESC">desc</option>
         </select>
 
+        <!-- only loads the category dropdown if there is no category already selected -->
+        <?php if(!$_GET): ?>
         <label for="category">Category</label> 
         <select name="category">
             <option value="all_categories"> ---All Categories--- </option>
@@ -124,6 +135,7 @@ else{
                 <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
             <?php endforeach ?>
         </select>
+        <?php endif ?>
 
         <input type="text" name="searchText" id="" placeholder="Type here to search">
         <input type="submit" value="Search" name="search">
@@ -131,14 +143,19 @@ else{
 
     <div id="category_bar">
         <ul>
+            <li><a href="shop.php">All categories</a></li>
             <?php foreach ($categories1 as $category) : ?>
-                <li> <a href="<?= $category['category_id']?> "> <?= $category['category_name'] ?> </a> </li>
+                <li> <a href="shop.php?category_id=<?= $category['category_id']?> "> <?= $category['category_name'] ?> </a> </li>
             <?php endforeach ?>
         </ul>
 
     </div>
-    <?php foreach ($row as $product): ?>
-    <!--image, title, company, price, condition -->
+
+    <div id="products">
+
+    <?php if($row):
+    foreach ($row as $product): ?>
+
     <div id= "product_div" style="border:solid 1px black; margin:5px">
          
         <div>
@@ -146,12 +163,20 @@ else{
             <h2><?= $product['company'] ?></h2>
             <h2><?= $product['item_condition'] ?></h2>
             <h3><?= $product['price'] ?></h3>
+            
             <?php 
             $folder = "./uploads/". $product['image'];
             ?>
             <img src="<?= $folder ?>" alt="iamge here">
         </div>
     </div>
-    <?php endforeach ?>
+    <?php endforeach ;
+
+    else: ?>
+    <h2> No Results Found</h2>
+    <a href="shop.php">Click here to view all products</a>
+    <?php endif ?>
+
+    </div>
 </body>
 </html>
