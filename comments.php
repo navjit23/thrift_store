@@ -12,9 +12,12 @@ if ($_GET['edit'] == true){
 }
 
 if($edit_mode){
-    //only able to execute edititng commnets and delete comments here
+
     if(isset($_POST['edit'])){
         editing_comment();
+    }
+    if(isset($_POST['delete'])){
+        delete_comment();
     }
 }
 //needs connection with products 
@@ -60,6 +63,19 @@ function editing_comment(){
 
 }
 //deleting comment
+function delete_comment(){
+    global $db;
+
+    $query = "DELETE FROM comments WHERE comment_id= :comment_id";
+    $comment_id = filter_input(INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT);
+    $statement= $db->prepare($query);
+    $statement->bindValue(':comment_id', $comment_id, PDO::PARAM_INT);
+    if($statement->execute()){
+        echo("Success");
+        header("Location: comments.php");
+    } // add an alert to confirm delete
+    
+}
 
 // in the views also need the email, rating and user when applied
 ?>
@@ -84,6 +100,13 @@ function editing_comment(){
             <div>
         
             <h2><?= $commentData['user_name'] ?></h2>
+            <h4><?= $commentData['user_email'] ?></h4>
+
+            <?php if($commentData['rating']!=0): ?>
+            <h3>Rating: <?= $commentData['rating'] ?> </h3>
+            <?php endif ?>
+
+
             <p><?= $commentData['comment'] ?></p>
             <h6>date here**********</h6>
 

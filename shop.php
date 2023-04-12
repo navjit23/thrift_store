@@ -9,8 +9,12 @@ require('connect.php');
 // search Bar only search
 function search_bar_filter($search_value, $sortBy, $sortType, $category_id){
     global $db;
+    
     $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' AND category_id LIKE '$category_id' ORDER BY $sortBy $sortType ;";
 
+    if($category_id == "all_categories"){
+        $products = "SELECT * FROM products WHERE `name` LIKE '%$search_value%' ORDER BY $sortBy $sortType ;";
+    }
     $statement = $db->prepare($products);
     
     $statement->execute();
@@ -115,7 +119,7 @@ else{
 
         <label for="category">Category</label> 
         <select name="category">
-            <option value=" "> ---All Categories--- </option>
+            <option value="all_categories"> ---All Categories--- </option>
             <?php foreach($categories1 as $category_type): ?>
                 <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
             <?php endforeach ?>

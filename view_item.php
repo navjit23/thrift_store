@@ -141,6 +141,10 @@ if(isset($_POST['add_comment'])){
             
                 <h2><?= $commentData['user_name'] ?></h2>
                 <p><?= $commentData['comment'] ?></p>
+
+                <?php if($commentData['rating']!=0): ?>
+                <h3>Rating: <?= $commentData['rating'] ?> </h3>
+                <?php endif ?>
                 <h6>date here**********</h6>
 
                 </div>
