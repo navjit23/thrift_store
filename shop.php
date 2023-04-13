@@ -1,10 +1,12 @@
 <?php
 
 require('connect.php');
-
+session_start();
 
 // result end = rStart * whatever the no.of results
 //try saving search results in sessions
+// when click on hyperlinks also clear the cookie
+// have a bla bla bla results found
 
 // LOADING THE PAGE
 // for search pagination
@@ -29,8 +31,13 @@ if($_POST){
     }
 
     $row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);
+    echo"post";
 }
-//create an if else here with sessions
+//loading a page with cookies for paginated results
+else if(array_key_exists( 'row_results', $_COOKIE) ){
+    $row = json_decode( $_COOKIE['row_results'] , true);
+    echo"sesso";
+}
 // default page loadup with/without categories filtered
 else{
     if(array_key_exists( 'category_id', $_GET)){
@@ -48,10 +55,15 @@ else{
         $results[] = $x;    
     }
     $row = $results;
+    echo"else";
 } 
 
 $no_of_pages = count($row) % $no_of_results ;
 
+$now = time();
+
+//	Set visit_count cookie. Expires in 2 hours
+setcookie('row_results', json_encode($row), $now + 60 * 60 *2);
 
 
 /* search Bar function takes 4 inputs to filter data and return the query result in an array
@@ -122,6 +134,9 @@ function loading_categories(){
     <title>Welcome to my Blog!</title>
 </head>
 <body>
+<?php
+    include_once 'header.php';
+?>
     
     <form action="" method="post">
         <label for="sort_by">Sort By</label>
@@ -199,7 +214,7 @@ function loading_categories(){
             <li><a href="shop.php?result_start=<?= $result_start - $no_of_results ?>"> <<< </a></li>
         <?php } 
 
-        for ($page_number = 0; $page_number <=$no_of_pages; $page_number ++ ) :?>
+        for ($page_number = 1; $page_number <=$no_of_pages+1; $page_number ++ ) :?>
             <li><a href="shop.php?result_start=<?= $page_number * $no_of_results ?>"><?=$page_number ?></a></li>
         <?php endfor ;
 
@@ -208,5 +223,8 @@ function loading_categories(){
         <?php } 
     endif ?>
     </ul>
+
+    <?php include_once 'footer.php'; ?>
 </body>
+
 </html>

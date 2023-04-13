@@ -90,6 +90,9 @@ function delete_comment(){
     <title>product name here</title>
 </head>
 <body>
+<?php
+    include_once 'header.php';
+?>
 <?php if(! $edit_mode): ?>
 
     <h4><a href="comments.php?edit='true'">Edit</a></h4>
@@ -148,6 +151,7 @@ function delete_comment(){
 
     </div>
     <?php endif ?>
+    <?php include_once 'footer.php'; ?>
 </body>
 
 

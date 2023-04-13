@@ -1,4 +1,5 @@
 <?php
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -12,22 +13,10 @@
 </head>
 
 <body>
-    
-<header>
-    <!--- nav bar and other stuff on top-->
-    <!-- put a logo and social handles-->
-    <!-- nav bar-->
-    <div id= "main_nav">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="new_item.php">Sell / Donate</a></li>
-        <li><a href="contact_us.php">Contact Us</a></li>
-        <li><a href="edit.php">Store Location</a></li>
-    </ul>
-    </div>
 
-</header>
+<?php
+    include_once 'header.php';
+?>
 
 <main>
     <!-- main content--->
@@ -63,8 +52,6 @@
 
 </main>
 
-<footer>
-<!-- footer and other sttuff--->
-</footer>
+<?php include_once 'footer.php'; ?>
 </body>
 </html>

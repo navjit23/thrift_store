@@ -1,24 +1,35 @@
 -- this will contain all the changes made (hopefully) with every new version of a commit or when some major change occurs ---
 
 to do by 13April:
-create CATEGORIES table
-add categories 2.4, 2.8, 3.2(with search)
-comments: 2.5, 2.9
+create CATEGORIES table DONE
+add categories 2.4 (need user table), 2.8 DONE, 3.2 DONE
+comments: 2.5 DONE, 2.9 DONE
+
+CURRENTLY WORKING ON:
+ 3.3
+
 
 fix bugs: 
 search bar on shop page, DONE
 search types need to stick after i search
-no item found remaining
+no item found remaining DONEEEE
 can only upload png
-for all categories sort not working
+for all categories sort not working DONE
 in edit page category and desription
-in the views also need the email, rating and user when applied
+in the views also need the email, rating and user when applied DONE
+comments need to be sorted
 
-for next week
-images 6.2, 6.4
+NEED to work on the shop.png to view the filtering conditions
+NEED t change the links for shop.php
+By next week
+images 6.2, 6.4, 
 create USER table
 users 7.1, 7.4, 7.5, 7.2
 passwords: 7.3
+
+after user table: 2.2, 2.3, 2.4,
+
+sitting at about 70-75 marks 
 
 
 

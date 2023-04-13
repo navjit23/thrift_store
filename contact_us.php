@@ -12,6 +12,9 @@
 </head>
 
 <body>
+<?php
+    include_once 'header.php';
+?>
     <!--- timing, google map, cell, mail, address, form(for suggestions)--->
 
     <div>
@@ -34,6 +37,6 @@
         <p>Monday to Saturday 10am - 5pm</p>
     </div>
 
-    
+    <?php include_once 'footer.php'; ?>
 </body>
 </html>

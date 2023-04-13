@@ -1,6 +1,3 @@
-<?php
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,34 +9,17 @@
     <title>product name here</title>
 </head>
 <body>
-<header>
-    <!--- nav bar and other stuff on top-->
-    <!-- put a logo and social handles-->
-    <!-- nav bar-->
-    <div id= "main_nav">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="new_item.php">Sell / Donate</a></li>
-        <li><a href="contact_us.php">Contact Us</a></li>
-        <li><a href="edit.php">Store Location</a></li>
-    </ul>
-    </div>
+<?php
+    include_once 'header.php';
+?>
 
-</header>
 
-<form action="" method="post">
-    <input type="text" name="userName">
-    <input type="password" name="pass">
-    <input type="password" name="repeatPass">
-    <input type="email" name="userEmail">
-    <input type="submit" value="Sign Up" name="signup"> 
-</form>
     
-<form action="" method="post">
-    <input type="text" name="userName">
-    <input type="password" name="pass">
+<form action="login.inc.php" method="post">
+    <input type="text" name="user_name" placeholder="Username/email">
+    <input type="password" name="pwd" placeholder= "Password">
     <input type="submit" value="Log In" name="login"> 
 </form>
+<?php include_once 'footer.php'; ?>
 </body>
 </html>

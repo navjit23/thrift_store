@@ -101,21 +101,11 @@ if(isset($_POST['add_comment'])){
     <title>product name here</title>
 </head>
 <body>
-<header>
-    <!--- nav bar and other stuff on top-->
-    <!-- put a logo and social handles-->
-    <!-- nav bar-->
-    <div id= "main_nav">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="new_item.php">Sell / Donate</a></li>
-        <li><a href="contact_us.php">Contact Us</a></li>
-        <li><a href="edit.php">Store Location</a></li>
-    </ul>
-    </div>
+    
+<?php
+    include_once 'header.php';
+?>
 
-</header>
     <?php if($_GET['id']): ?>
         <div>
         <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>

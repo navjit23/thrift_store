@@ -117,22 +117,9 @@ elseif(isset($_GET['id'])){
     <title>Edit this Post!</title>
 </head>
 <body>
-    <!-- Remember that alternative syntax is good and html inside php is bad -->
-    <header>
-    <!--- nav bar and other stuff on top-->
-    <!-- put a logo and social handles-->
-    <!-- nav bar-->
-    <div id= "main_nav">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="shop.php">Shop</a></li>
-        <li><a href="new_item.php">Sell / Donate</a></li>
-        <li><a href="contact_us.php">Contact Us</a></li>
-        <li><a href="edit.php">Store Location</a></li>
-    </ul>
-    </div>
-
-</header>
+<?php
+    include_once 'header.php';
+?>
     
 
 
@@ -187,6 +174,6 @@ elseif(isset($_GET['id'])){
         <?php header("Location: index.php"); */?>
 
     <?php endif ?>
-
+    <?php include_once 'footer.php'; ?>
 </body>
 </html>
