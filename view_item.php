@@ -1,5 +1,6 @@
 <?php
 require('connect.php');
+session_start();
 
 // TO LOAD A BLOG
 function loading_page(){

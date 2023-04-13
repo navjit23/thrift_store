@@ -10,6 +10,7 @@
 
 require('connect.php');
 require('authenticate.php');
+session_start();
 
 // To DELETE
 if(isset($_POST['delete'])){

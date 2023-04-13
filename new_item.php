@@ -2,7 +2,7 @@
 
 require('connect.php');
 require('authenticate.php');
-
+session_start();
 
 // Uploading an image
 
