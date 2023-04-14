@@ -3,6 +3,17 @@
 require('scripts/connect.php');
 session_start();
 
+//user login check
+$login_user = false;
+$admin_access = false;
+if(array_key_exists('user_id', $_SESSION ) ){
+    $login_user =true;
+
+    if($_SESSION['user_id'] == 1){
+        $admin_access = true;
+    }
+}
+
 // result end = rStart * whatever the no.of results
 //try saving search results in sessions
 // when click on hyperlinks also clear the cookie
@@ -136,8 +147,8 @@ function loading_categories(){
 <body>
 <?php
     include_once 'header.php';
-?>
-    
+
+    if ($login_user): ?>    
     <form action="" method="post">
         <label for="sort_by">Sort By</label>
         <select name="sort_by" >
@@ -167,7 +178,8 @@ function loading_categories(){
         <input type="text" name="searchText" id="" placeholder="Type here to search">
         <input type="submit" value="Search" name="search">
     </form>
-
+    <?php endif ?>
+    
     <div id="category_bar">
         <ul>
             <li><a href="shop.php?result_start=0">All categories</a></li>
@@ -193,9 +205,11 @@ function loading_categories(){
             <h3><?= $product['price'] ?></h3>
             
             <?php 
-            $folder = "./uploads/". $product['image'];
-            ?>
-            <img src="<?= $folder ?>" alt="iamge here">
+            if($product['image']):
+                $folder = "./uploads/". $product['image'];
+                ?>
+                <img src="<?= $folder ?>" alt="iamge here">
+            <?php endif ?>
         </div>
     </div>
     <?php endforeach ;

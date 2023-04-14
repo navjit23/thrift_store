@@ -31,9 +31,9 @@ function login_user($user_name, $pass){
 
 }
 
-function createUser($full_name, $user_name, $pass, $email, $is_admin){
+function createUser($full_name, $user_name, $pass, $email, $by_admin){
     global $db;
-    $users = "INSERT INTO users(full_name, name, email, password, is_admin) VALUES(:fullname, :name, :email, :password, :is_admin);";
+    $users = "INSERT INTO users(full_name, name, email, password) VALUES(:fullname, :name, :email, :password);";
 
     $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -43,12 +43,15 @@ function createUser($full_name, $user_name, $pass, $email, $is_admin){
     $statement->bindValue(':email', $email);
     $statement->bindValue(':fullname', $full_name);
     $statement->bindValue(':password', $hashed_pass);
-    $statement->bindValue(':is_admin', $is_admin);
 
     $statement->execute();
 
-    login_user($user_name, $pass);
-
+    if(!$by_admin){
+        login_user($user_name, $pass);
+    }
+    else{
+        header("location: ../admin/users.admin.php");
+    }
 }
 
 

@@ -31,9 +31,9 @@ require('scripts/connect.php');
 
     <label for="pwd_repeat">Repeat Password</label>
     <input type="password" name="pwd_repeat" placeholder=" Repeat Password ...">
+
+    <input type="hidden" name="by_admin" value="false">
     
-    <label for="is_admin">Admin!</label>
-    <input type="checkbox" name="is_admin" >
 
     <input type="submit" value="Sign Up" name="sign_up">
 </form>

@@ -2,6 +2,19 @@
 require('scripts/connect.php');
 session_start();
 
+
+//user login check
+$login_user = false;
+$admin_access = false;
+if(array_key_exists('user_id', $_SESSION ) ){
+    $login_user =true;
+
+    if($_SESSION['user_id'] == 1){
+        $admin_access = true;
+    }
+}
+
+
 // TO LOAD A BLOG
 function loading_page(){
     global $db;
@@ -109,13 +122,19 @@ if(isset($_POST['add_comment'])){
 
     <?php if($_GET['id']): ?>
         <div>
-        <a href="admin/edit.admin.php?id=<?=$row['product_id']?>"><p>edit</p></a>
+        <?php if($admin_access): ?>
+            <a href="admin/edit.admin.php?id=<?=$row['product_id']?>"><p>edit</p></a>
+        <?php endif ?>
+
         <h1><?= $row['name'] ?></h1>
         <h3><?= $row['company'] ?></h3>
         <h2><?= $row['price'] ?></h2>
     
-        <?php $folder = "./uploads/". $row['image']; ?>
-        <img src="<?= $folder ?>" alt="iamge here">
+        <?php 
+        if($row['image']):
+            $folder = "./uploads/". $row['image']; ?>
+            <img src="<?= $folder ?>" alt="iamge here">
+        <?php endif ?>
         </div>
         <div>
             <p><?= $row['description'] ?></p>

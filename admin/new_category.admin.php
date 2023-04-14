@@ -1,6 +1,10 @@
 <?php
 session_start();
 require('../scripts/connect.php');
+if($_SESSION['user_id'] != 1){
+    header(" location: ../index.php");
+    exit();
+}
 
 $row = loading_categories();
 if(isset($_POST)){

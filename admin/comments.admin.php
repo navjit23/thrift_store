@@ -1,7 +1,10 @@
 <?php
 session_start();
 require('../scripts/connect.php');
-
+if($_SESSION['user_id'] != 1){
+    header(" location: ../index.php");
+    exit();
+}
 
 $comments = loading_comments();
 //sanitize the get aswell

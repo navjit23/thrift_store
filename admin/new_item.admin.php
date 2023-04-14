@@ -3,7 +3,10 @@
 require('../scripts/connect.php');
 
 session_start();
-
+if($_SESSION['user_id'] != 1){
+    header(" location: ../index.php");
+    exit();
+}
 // Uploading an image
 
 

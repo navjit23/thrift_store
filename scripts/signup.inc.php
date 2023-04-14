@@ -10,13 +10,8 @@ if(isset($_POST['sign_up']))
     $pass = $_POST['pwd'];
     $repeat_pass = $_POST['pwd_repeat'];
     $email = $_POST['email'];
+    $by_admin = $_POST['by_admin'];
 
-    if (in_array('is_admin', $_POST)){
-        $is_admin = 1;
-    }
-    else{
-        $is_admin= `NULL`;
-    }
 
     if(emptyInputSignup($full_name, $user_name, $pass, $repeat_pass, $email) ){
         header("location: ../signup_page.php?error='empty_fields'");
@@ -43,7 +38,7 @@ if(isset($_POST['sign_up']))
         exit();
     }
 
-    createUser($full_name, $user_name, $pass, $email, $is_admin);
+    createUser($full_name, $user_name, $pass, $email, $by_admin);
 }
 
 else{
