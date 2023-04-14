@@ -1,4 +1,6 @@
-
+<?php
+require('scripts/connect.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,7 @@
 
 
     
-<form action="login.inc.php" method="post">
+<form action="scripts/login.inc.php" method="post">
     <input type="text" name="user_name" placeholder="Username/email">
     <input type="password" name="pwd" placeholder= "Password">
     <input type="submit" value="Log In" name="login"> 

@@ -1,7 +1,7 @@
 <?php 
 
-require('connect.php');
-require('authenticate.php');
+require('../scripts/connect.php');
+
 session_start();
 
 // Uploading an image
@@ -113,7 +113,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         $new_file_path  = file_upload_path($file_filename);
         move_uploaded_file($temporary_file_path, $new_file_path);
         upload_new_item($file_filename);
-        header("Location: fileresize.php?path=$new_file_path");
+        header("Location: ../scripts/fileresize.php?path=$new_file_path");
         }
         else{
             //here should be a prompt and after wards normal file uploaded
@@ -141,13 +141,13 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 </head>
 <body>
 <?php
-    include_once 'header.php';
+    include_once '../header.php';
 ?>
     
    
 
 
-    <form action="new_item.php" method="post" enctype="multipart/form-data"> 
+    <form action="new_item.admin.php" method="post" enctype="multipart/form-data"> 
         <label for="productName">Name</label>
         <input type="text" name="productName">
 
@@ -182,6 +182,6 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <input type="submit" value="Add Product">
         
     </form>
-    <?php include_once 'footer.php'; ?>
+    <?php include_once '../footer.php'; ?>
 </body>
 </html>

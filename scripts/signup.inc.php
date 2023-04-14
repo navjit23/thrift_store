@@ -19,27 +19,27 @@ if(isset($_POST['sign_up']))
     }
 
     if(emptyInputSignup($full_name, $user_name, $pass, $repeat_pass, $email) ){
-        header("location: signup_page.php?error='empty_fields'");
+        header("location: ../signup_page.php?error='empty_fields'");
         exit();
     }
 
     if(invaid_user_name($user_name)){
-        header("location: signup_page.php?error='invalid_user_name'");
+        header("location: ../signup_page.php?error='invalid_user_name'");
         exit();
     }
 
     if(invaid_email($email)){
-        header("location: signup_page.php?error='invalid_email'");
+        header("location: ../signup_page.php?error='invalid_email'");
         exit();
     }
 
     if(user_name_exists($user_name, $email)){
-        header("location: signup_page.php?error='user_name_exists'");
+        header("location: ../signup_page.php?error='user_name_exists'");
         exit();
     }
 
     if(!pass_match($pass, $repeat_pass)){
-        header("location: signup_page.php?error='password_does_not_match'");
+        header("location: ../signup_page.php?error='password_does_not_match'");
         exit();
     }
 
@@ -47,6 +47,6 @@ if(isset($_POST['sign_up']))
 }
 
 else{
-    header ("signup_page.php");
+    header ("../signup_page.php");
     exit();
 }

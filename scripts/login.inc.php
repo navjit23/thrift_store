@@ -8,7 +8,7 @@ if(isset($_POST['login']))
     $pass = $_POST['pwd'];
 
     if(emptyInputLogin($user_name, $pass) ){
-        header("location: login_page.php?error='empty_fields'");
+        header("location: ../login_page.php?error='empty_fields'");
         exit();
     }
 
@@ -16,6 +16,6 @@ if(isset($_POST['login']))
 
 }
 else{
-    header("location: login_page.php");
+    header("location: ../login_page.php");
     exit();
 }

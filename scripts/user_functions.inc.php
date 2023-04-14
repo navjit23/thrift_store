@@ -7,7 +7,7 @@ function login_user($user_name, $pass){
 
     if(! $user){
         // error login no info found
-        header("location: login_page.php?error='doesnot_exist'");
+        header("location: ../login_page.php?error='doesnot_exist'");
         exit();
     }
 
@@ -18,14 +18,14 @@ function login_user($user_name, $pass){
     if(!$check_password){
 
         // login failed
-        header("location: login_page.php?error='wrong_pass'");
+        header("location: ../login_page.php?error='wrong_pass'");
         exit();
     }
     else{
         session_start();
         $_SESSION['user_id']= $user['user_id'];
         $_SESSION['user_name']= $user['name'];
-        header("location: index.php");
+        header("location: ../index.php");
         exit();
     }
 

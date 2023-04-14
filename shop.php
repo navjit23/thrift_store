@@ -1,6 +1,6 @@
 <?php
 
-require('connect.php');
+require('scripts/connect.php');
 session_start();
 
 // result end = rStart * whatever the no.of results

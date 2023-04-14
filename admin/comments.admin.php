@@ -1,7 +1,7 @@
 <?php
 session_start();
-require('connect.php');
-require('authenticate.php');
+require('../scripts/connect.php');
+
 
 $comments = loading_comments();
 //sanitize the get aswell
@@ -58,7 +58,7 @@ function editing_comment(){
 
     if($statement->execute()){
         echo("Success");
-        header("Location: comments.php");
+        header("Location: comments.admin.php");
     }
 
 
@@ -73,7 +73,7 @@ function delete_comment(){
     $statement->bindValue(':comment_id', $comment_id, PDO::PARAM_INT);
     if($statement->execute()){
         echo("Success");
-        header("Location: comments.php");
+        header("Location: comments.admin.php");
     } // add an alert to confirm delete
     
 }
@@ -92,11 +92,11 @@ function delete_comment(){
 </head>
 <body>
 <?php
-    include_once 'header.php';
+    include_once '../header.php';
 ?>
 <?php if(! $edit_mode): ?>
 
-    <h4><a href="comments.php?edit='true'">Edit</a></h4>
+    <h4><a href="comments.admin.php?edit='true'">Edit</a></h4>
     <div id="comment_box_view_only" style="border: 1px solid black">
                 
         <?php if(count($comments) > 0):
@@ -152,7 +152,7 @@ function delete_comment(){
 
     </div>
     <?php endif ?>
-    <?php include_once 'footer.php'; ?>
+    <?php include_once '../footer.php'; ?>
 </body>
 
 

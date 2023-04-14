@@ -1,5 +1,5 @@
 <?php
-require('connect.php');
+require('scripts/connect.php');
 session_start();
 
 // TO LOAD A BLOG
@@ -109,7 +109,7 @@ if(isset($_POST['add_comment'])){
 
     <?php if($_GET['id']): ?>
         <div>
-        <a href="edit.php?id=<?=$row['product_id']?>"><p>edit</p></a>
+        <a href="admin/edit.admin.php?id=<?=$row['product_id']?>"><p>edit</p></a>
         <h1><?= $row['name'] ?></h1>
         <h3><?= $row['company'] ?></h3>
         <h2><?= $row['price'] ?></h2>

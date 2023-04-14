@@ -8,8 +8,8 @@
 
 ****************/
 
-require('connect.php');
-require('authenticate.php');
+require('../scripts/connect.php');
+
 session_start();
 
 // To DELETE
@@ -20,7 +20,7 @@ if(isset($_POST['delete'])){
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
     if($statement->execute()){
         echo("Success");
-        header("Location: index.php");
+        header("Location: ../index.php");
     } // add an alert to confirm delete
 }
 
@@ -79,7 +79,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         //  execute() will check for possible SQL injection and remove if necessary
         if($statement->execute()){
             echo("Success");
-            //header("Location: index.php");
+            header("Location: ../index.php");
         }
         
 }
@@ -119,7 +119,7 @@ elseif(isset($_GET['id'])){
 </head>
 <body>
 <?php
-    include_once 'header.php';
+    include_once '../header.php';
 ?>
     
 
@@ -127,7 +127,7 @@ elseif(isset($_GET['id'])){
 
 
     <?php if($id): ?>
-        <form action="edit.php" method="post" enctype="multipart/form-data"> 
+        <form action="edit.admin.php" method="post" enctype="multipart/form-data"> 
 
         <input type="hidden" name="id" value="<?= $row['product_id'] ?>">
 
@@ -171,10 +171,11 @@ elseif(isset($_GET['id'])){
 
     </form>
 
-    <?php /* else : ?>
-        <?php header("Location: index.php"); */?>
+    <?php  else : 
+        header("Location: index.php"); ?>
+        exit();
 
     <?php endif ?>
-    <?php include_once 'footer.php'; ?>
+
 </body>
 </html>

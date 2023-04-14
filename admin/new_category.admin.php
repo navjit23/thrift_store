@@ -1,24 +1,26 @@
 <?php
 session_start();
-require('connect.php');
-require('authenticate.php');
+require('../scripts/connect.php');
 
 $row = loading_categories();
 if(isset($_POST)){
 
     if(isset($_POST['add_category']) && trim($_POST['new_category']) != '' ){
         add_category();
-        header("location: shop.php"); // should go to user page once formed
+        header("location: admin.php"); 
+        exit();
     }
 
     if(isset($_POST['rename_category']) && trim($_POST['rename']) != '' ){
         rename_category();
-        header("location: shop.php"); // should go to user page once formed
+        header("location: admin.php"); 
+        exit();
     }
 
     if(isset($_POST['delete_category'])){
         remove_category();
-        header("location: shop.php"); // should go to user page once formed
+        header("location: admin.php"); 
+        exit();
     }
 }
 
@@ -101,9 +103,14 @@ function loading_categories(){
     <link rel="stylesheet" href="main.css">
     <title>My Blog Post!</title>
 </head>
+
 <body>
+<?php
+    include_once 'header.admin.php';
+?>
+
     <!-- loading the categories--->
-    <form action="category.php" method="post">
+    <form action="new_category.admin.php" method="post">
 
     <label for="loaded_category">Category</label>
     <select name="loaded_category" >
@@ -124,12 +131,13 @@ function loading_categories(){
 
 
     <!-- adding new categories--->
-    <form action="category.php" method="post">
+    <form action="new_category.admin.php" method="post">
         <label for="new_category">Category</label>
         <input type="text" name="new_category">
 
         <input type="submit" value="Add Category" name="add_category">
         
     </form>
+
 </body>
 </html>

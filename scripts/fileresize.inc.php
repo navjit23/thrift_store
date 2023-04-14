@@ -17,6 +17,5 @@ function imageResize($image){
 
 $image_path = $_GET['path'];
 imageResize($image_path);
-echo"success";
-header("Location:index.php");
+header("Location: ../index.php");
 ?>

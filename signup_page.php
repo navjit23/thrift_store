@@ -1,3 +1,7 @@
+<?php
+require('scripts/connect.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,7 @@
 <?php
     include_once 'header.php';
 ?>
-<form action="signup.inc.php" method="post">
+<form action="scripts/signup.inc.php" method="post">
 
     <label for="name">Full Name</label>
     <input type="text" name="name" placeholder="Full name ...">

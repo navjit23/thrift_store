@@ -1,4 +1,5 @@
 <?php
+require ('scripts/connect.php');
 session_start();
 ?>
 
