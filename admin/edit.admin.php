@@ -132,7 +132,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         if($statement->execute()){
             echo("Success");
             
-           // header("Location: ../index.php");
+           header("Location: ../index.php");
+           exit();
         }
         
 }
@@ -147,8 +148,9 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
     <title>Edit this Post!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
 <body>
 <?php
@@ -160,61 +162,69 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 
 
     <?php if($id): ?>
-        <form action="edit.admin.php" method="post" enctype="multipart/form-data"> 
+    <div class="container">
+
+    <form action="edit.admin.php" method="post" enctype="multipart/form-data"> 
 
         <input type="hidden" name="id" value="<?= $row['product_id'] ?>">
 
-        <label for="productName">Name</label>
-        <input type="text" name="productName" value="<?= $row['name'] ?>">
+        <label for="productName" class="form-label">Name</label>
+        <input type="text" class="form-control" name="productName" value="<?= $row['name'] ?>">
 
-        <label for="company">Brand</label>
-        <input type="text" name="company" value="<?= $row['company'] ?>">
+        <label for="company" class="form-label">Brand</label>
+        <input type="text" class="form-control" name="company" value="<?= $row['company'] ?>">
 
-        <label for="condition">Condition</label>
-        <input type="int" name="condition" value="<?= $row['item_condition'] ?>">
+        <label for="condition" class="form-label">Condition</label>
+        <input type="int" class="form-control" name="condition" value="<?= $row['item_condition'] ?>">
 
-        <label for="rarity">Rarity</label>
-        <input type="int" name="rarity" value="<?= $row['rarity'] ?>">
+        <label for="rarity" class="form-label">Rarity</label>
+        <input type="int" class="form-control" name="rarity" value="<?= $row['rarity'] ?>">
 
-        <label for="price">Price</label>
-        <input type="int" name="price" value="<?= $row['price'] ?>">
-
-        <select name="category" >
+        <br>
+        <div class="input-group container">
+        <label for="price" class="form-label">Price :</label>
+        <div class="input-group-text">$</div>
+        <input type="int" class="form-control" name="price" value="<?= $row['price'] ?>">
+        </div>
+        <br>
+        <select class="form-control" name="category" >
 
         <?php foreach($categories as $category_type):
             
             if($category_type['category_id'] == $row['category_id']) :?>
-                <option value="<?= $category_type['category_id'] ?>" selected > <?= $category_type['category_name'] ?> </option>
+                <option class="form-control" value="<?= $category_type['category_id'] ?>" selected > <?= $category_type['category_name'] ?> </option>
                 
             <?php else : ?>
-                <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+                <option class="form-control" value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
         
             <?php endif;
         endforeach ?>
         </select>
 
-        <label for="color">Color</label>
-        <input type="text" name="color" value="<?= $row['color'] ?>">
+        <label for="color" class="form-label">Color</label>
+        <input type="text" class="form-control" name="color" value="<?= $row['color'] ?>">
     
         <?php if( $row['image']): ?>
             <img src="<?= $folder ?>" alt="image here">
             
-            <label for="del_image">Check Here to Delete Image: </label>
-            <input type="checkbox" name="del_image" id="del_image" value="delete_image">;
+            <label for="del_image" class="form-label">Check Here to Delete Image: </label>
+            <input type="checkbox" name="del_image" id="del_image" value="delete_image">
+            <br>
             <input type="hidden" name="current_image_path" value="<?= $folder ?>">
         <?php endif ?>
 
         <label for="new_image">Click Here to Change the Image</label>
-        <input type="file" name="new_image" id="new_image">
+        <input type="file" class="form-control" name="new_image" id="new_image">
 
         <label for="description">Description</label>
-        <textarea name="description" id="description" cols="30" rows="10" value="<?= $row['description'] ?>"></textarea>
+        <textarea name="description" id="description" class="form-control" rows="10" value="<?= $row['description'] ?>">"<?= $row['description'] ?>"</textarea>
         
 
-        <input type="submit" value="Update" name="update">
-        <input type="submit" name='delete' value="Delete">
+        <input type="submit" class="btn btn-primary" value="Update" name="update">
+        <input type="submit" class="btn btn-outline-secondary" name='delete' value="Delete">
 
     </form>
+    </div>
 
     <?php  else : 
         header("Location: ../index.php"); 

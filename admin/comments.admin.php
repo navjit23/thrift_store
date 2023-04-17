@@ -90,21 +90,23 @@ function delete_comment(){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>product name here</title>
 </head>
 <body>
 <?php
     include_once 'header.admin.php';
 ?>
+<div class="container" >
 <?php if(! $edit_mode): ?>
 
-    <h4><a href="comments.admin.php?edit='true'">Edit</a></h4>
+    <h4><a href="comments.admin.php?edit='true'" class="btn btn-primary btn-lg">Edit</a></h4>
     <div id="comment_box_view_only" style="border: 1px solid black">
                 
         <?php if(count($comments) > 0):
         foreach ($comments as $commentData): ?>
-            <div>
+            <div class="border border-1 container"> 
         
             <h2><?= $commentData['user_name'] ?></h2>
             <h4><?= $commentData['user_email'] ?></h4>
@@ -133,17 +135,16 @@ function delete_comment(){
         <?php if(count($comments) > 0):
         foreach ($comments as $commentData): ?>
             
-            <form action="" method="post">
-                <h2><?= $commentData['user_name'] ?></h2>
+            <form action="" method="post" class="border border-1">
                 <h6>date here**********</h6>
+                <h2><?= $commentData['user_name'] ?></h2>
 
                 <input type="hidden" name="comment_id" value="<?= $commentData['comment_id'] ?>" >
                 
-                <textarea name="comment"  cols="30" rows="10" ><?= $commentData['comment'] ?></textarea>
-
-
-                <input type="submit" value="Edit" name="edit">
-                <input type="submit" value="Delete" name="delete">
+                <textarea name="comment" class="form-control"  rows="10" ><?= $commentData['comment'] ?></textarea>
+               
+                <input type="submit" class="justify-content-center btn btn-outline-secondary" value="Edit" name="edit">
+                <input type="submit" class="justify-content-center btn btn-danger" value="Delete" name="delete">
             </form>
 
         <?php endforeach;
@@ -155,6 +156,8 @@ function delete_comment(){
 
     </div>
     <?php endif ?>
+</div>
+<?php include_once 'footer.admin.php' ?>
 
 </body>
 

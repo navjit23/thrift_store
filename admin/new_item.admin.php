@@ -142,7 +142,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>My Blog Post!</title>
 </head>
 <body>
@@ -152,42 +153,49 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     
    
 
-
+<div class="container">
     <form action="new_item.admin.php" method="post" enctype="multipart/form-data"> 
-        <label for="productName">Name</label>
-        <input type="text" name="productName">
+        
+        <label for="productName" class="form-label">Name</label>
+        <input type="text" name="productName" class="form-control">
 
-        <label for="company">Brand</label>
-        <input type="text" name="company">
+        <label for="company" class="form-label">Brand</label>
+        <input type="text" name="company" class="form-control">
 
-        <label for="condition">Condition</label>
-        <input type="int" name="condition">
+        <label for="condition" class="form-label">Condition</label>
+        <input type="int" name="condition" class="form-control">
 
-        <label for="rarity">Rarity</label>
-        <input type="int" name="rarity">
+        <label for="rarity" class="form-label">Rarity</label>
+        <input type="int" name="rarity" class="form-control">
 
-        <label for="price">Price</label>
-        <input type="int" name="price">
+        <br>
+        <div class="input-group container">
+            <label for="price" class="form-label">Price</label>
+            <div class="input-group-text">$</div>
+            <input type="int" name="price" class="form-control">
+            <div class="input-group-text">.00</div>
+        </div>
+        <br>
 
-        <label for="category">Category</label> <!-- maybe createa   a dropdown-->
-        <select name="category">
+        <label for="category" class="form-label">Category</label> <!-- maybe createa   a dropdown-->
+        <select class="form-control" name="category">
             <?php foreach($row as $category_type): ?>
-                <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+                <option class="form-control" value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
             <?php endforeach ?>
         </select>
 
-        <label for="color">Color</label>
-        <input type="text" name="color">
+        <label for="color" class="form-label">Color</label>
+        <input type="text" class="form-control" name="color">
 
-        <label for="image">Image </label> <!---- needs validation and rn cannot be empty----->
-        <input type="file" name="image">
+        <label for="image" class="form-label">Image </label> <!---- needs validation and rn cannot be empty----->
+        <input type="file" class="form-control" name="image">
 
-        <label for="description">Description</label>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" class="form-control"  rows="10"></textarea>
 
-        <input type="submit" value="Add Product">
+        <input type="submit" class="btn btn-primary" value="Add Product">
         
     </form>
-
+</div>
 </body>
 </html>

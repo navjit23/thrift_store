@@ -10,6 +10,7 @@ require('scripts/connect.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Contact Us</title>
 </head>
 
@@ -18,7 +19,7 @@ require('scripts/connect.php');
     include_once 'header.php';
 ?>
     <!--- timing, google map, cell, mail, address, form(for suggestions)--->
-
+<div class="container">
     <div>
         <h1>Contact Us</h1>
         <ul>
@@ -38,7 +39,7 @@ require('scripts/connect.php');
         <h1>Donation Timing</h1>
         <p>Monday to Saturday 10am - 5pm</p>
     </div>
-
+</div>
     <?php include_once 'footer.php'; ?>
 </body>
 </html>

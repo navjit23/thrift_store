@@ -104,7 +104,8 @@ function loading_categories(){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>My Blog Post!</title>
 </head>
 
@@ -113,35 +114,50 @@ function loading_categories(){
     include_once 'header.admin.php';
 ?>
 
+<div class="container">
     <!-- loading the categories--->
-    <form action="new_category.admin.php" method="post">
+    <form action="new_category.admin.php" method="post" class="border border-1">
+    <h3>Edit a Category</h3>
 
-    <label for="loaded_category">Category</label>
-    <select name="loaded_category" >
+    <select class="form-control"name="loaded_category" >
 
     <?php foreach($row as $category_type): ?>    
-    <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+    <option class="form-control" value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
     <?php endforeach ?>
 
     </select>
    
 
-    <label for="rename">Rename</label>
-    <input type="text" name="rename">
+    <label for="rename" class="form-label">Rename</label>
+    <input type="text" class="form-control" name="rename">
 
-    <input type="submit" value="Rename Category" name="rename_category">
-    <input type="submit" value="Delete Category" name="delete_category">
+    <input type="submit" class="btn btn-primary" value="Rename Category" name="rename_category">
+    <input type="submit" class="btn btn-outline-secondary" value="Delete Category" name="delete_category">
     </form>
 
 
     <!-- adding new categories--->
-    <form action="new_category.admin.php" method="post">
-        <label for="new_category">Category</label>
+    <div class="container mt-5 p-3">
+    <form action="new_category.admin.php" method="post" class="border border-1">
+        <label for="new_category" >Category</label>
         <input type="text" name="new_category">
 
-        <input type="submit" value="Add Category" name="add_category">
+        <input type="submit" class="btn btn-primary"  value="Add Category" name="add_category">
         
     </form>
+    </div>
+
+    <div>
+        <ul>
+            <?php foreach($row as $category_name): ?>
+                <li><?= $category_name['category_name'] ?> </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+
+</div>
+
+
 
 </body>
 </html>

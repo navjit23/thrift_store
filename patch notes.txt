@@ -14,11 +14,21 @@ fix bugs:
 search types need to stick after i search
 can only upload png ITHINKDONE
 NEED to work on the shop.phg to view the filtering conditions
+SHOW NUMBER OF RESULTS FOUND
 NEED t change the links for shop.php (for pagination)
-test edit page
-view list of avail categories in category page
+test edit page DONE
+view list of avail categories in category page DONE
 new images not added in edit.php
 error handler if no admin go to admin pagees
+description and comment in editing not loading/saving DONE
+redirecting edit page back DONE
+new item with no pic redirect DONE
+item condition and rarity 0 dont show
+footers
+non admin name header
+rearrange shop and viiew item things for better understanind
+MAKE THE INDEX PAGE BETTER
+RESTRORE NON PAGINATED SEARCH PAGE
 
 
 By next week
@@ -31,7 +41,7 @@ after user table: 2.2 DONE, 2.3 DONE, 2.4 DONE , 2.1
 
 sitting at about 70-75 marks 
 2.10, 2.6?
-9.1, 5.1, 5.2, 5.3, 5.4 5.5
+9.1, 5.1, 5.2 DONE, 5.3 DONE, 5.4 5.5
 4.1, 4.2, 4.3 
 
 not check for unique image during remove

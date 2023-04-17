@@ -87,59 +87,67 @@ function delete_user(){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Welcome to my Blog!</title>
 </head>
 <body>
 <?php
     include_once 'header.admin.php';
 ?>
-    <form action="../scripts/signup.inc.php" method="post">
+<div class="container">
+    <form class="border m-3 p-2" action="../scripts/signup.inc.php" method="post">
+        <h2>Add a new user</h2>
 
-        <label for="name">Full Name</label>
-        <input type="text" name="name" placeholder="Full name ...">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Full name ...">
 
-        <label for="user_name">User Name</label>
-        <input type="text" name="user_name" placeholder="User name ...">
+        <label for="user_name" class="form-label">User Name</label>
+        <input type="text" class="form-control" name="user_name" placeholder="User name ...">
 
-        <label for="email">Email</label>
-        <input type="email" name="email" placeholder="Email ...">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Email ...">
 
-        <label for="pwd">Password</label>
-        <input type="password" name="pwd" placeholder="Password ...">
+        <label for="pwd" class="form-label">Password</label>
+        <input type="password" class="form-control" name="pwd" placeholder="Password ...">
 
-        <label for="pwd_repeat">Repeat Password</label>
-        <input type="password" name="pwd_repeat" placeholder=" Repeat Password ...">
+        <label for="pwd_repeat" class="form-label">Repeat Password</label>
+        <input type="password" class="form-control" name="pwd_repeat" placeholder=" Repeat Password ...">
 
         <input type="hidden" name="by_admin" value= '1'>
 
-        <input type="submit" value="Create User" name="sign_up">
+        <input type="submit" class="btn btn-primary" value="Create User" name="sign_up">
     </form>
 
 
     <div>
-        <a href="users.admin.php?edit=true">Edit</a>
+        <a href="users.admin.php?edit=true" class="btn btn-outline-secondary">Edit</a>
         <?php foreach ($users as $user): ?>
-            <form action="" method="post">
+            <form action="" method="post" class="border border-1 m-3 p-3">
                 <input type="hidden" name="edit_user_id" value="<?= $user['user_id']?>">
 
                 <?php if($editmode): ?>
-                    <label for="username">UserName</label>
-                    <input type="text" name="edit_username" value="<?= $user['name']?>">
-
-                    <label for="fullname">FullName</label>
-                    <input type="text" name="edit_fullname" value="<?= $user['full_name']?>">
-                    <input type="submit" value="edit" name="edit">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" name="edit_username" value="<?= $user['name']?>" placeholder="User name">
+                    <label for="username" class="form-label">UserName</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="edit_fullname" value="<?= $user['full_name']?>" placeholder="Full name">
+                        <label for="fullname" class="form-label">FullName</label>
+                    </div>
+                    <input type="submit" value="edit" class="btn btn-outline-secondary" name="edit">
                 <?php else: ?>
                     <h2><?= $user['name']?></h2>
                     <h3><?= $user['full_name']?></h3>
                 <?php endif ?>
-                <h4><?= $user['email'] ?></h4>
+                <h6><?= $user['email'] ?></h6>
 
-                <input type="submit" value="Delete" name="delete">
+                <input type="submit" value="Delete" class="btn btn-danger" name="delete">
             </form>
 
         <?php endforeach ?>
     </div>
+</div>
+<?php include_once 'footer.admin.php' ?>
 
 </body>

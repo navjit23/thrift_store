@@ -142,89 +142,100 @@ function loading_categories(){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Welcome to my Blog!</title>
 </head>
 <body>
 <?php
-    include_once 'header.php';
+    include_once 'header.php'; ?>
 
-    if ($login_user): ?>    
-    <form action="" method="post">
-        <label for="sort_by">Sort By</label>
-        <select name="sort_by" >
-            <option value="date">By Date</option>
-            <option value="name">By Name</option>
-            <option value="price">By Cost</option>
-            <option value="rarity">By Rarity</option>
-        </select>
+<div class="container">
+    <?php
+    if ($login_user): ?> 
+    <div id="search_box" class="row">
+        <form action="" method="post">
+            <label for="sort_by" class="form-label">Sort By</label>
+            <select name="sort_by" class="form-select-sm" >
+                <option value="date">By Date</option>
+                <option value="name">By Name</option>
+                <option value="price">By Cost</option>
+                <option value="rarity">By Rarity</option>
+            </select>
 
-        <label for="sort_type"></label>
-        <select name="sort_type">
-            <option value="ASC">asc </option>
-            <option value="DESC">desc</option>
-        </select>
+            <label for="sort_type"></label>
+            <select name="sort_type" class="form-select-sm">
+                <option value="ASC">asc </option>
+                <option value="DESC">desc</option>
+            </select>
 
-        <!-- only loads the category dropdown if there is no category already selected -->
-        <?php if(!array_key_exists( 'category_id', $_GET)): ?>
-        <label for="category">Category</label> 
-        <select name="category">
-            <option value="all_categories"> ---All Categories--- </option>
-            <?php foreach($categories1 as $category_type): ?>
-                <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
-            <?php endforeach ?>
-        </select>
+            <!-- only loads the category dropdown if there is no category already selected -->
+            <?php if(!array_key_exists( 'category_id', $_GET)): ?>
+            <label for="category">Category</label> 
+            <select class="form-select-sm" name="category">
+                <option value="all_categories"> ---All Categories--- </option>
+                <?php foreach($categories1 as $category_type): ?>
+                    <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
+                <?php endforeach ?>
+            </select>
+            <?php endif ?>
+
+            <input type="text" class="form-control" name="searchText" id="" placeholder="Type here to search" >
+            <input type="submit" value="Search" name="search">
+        </form>
         <?php endif ?>
-
-        <input type="text" name="searchText" id="" placeholder="Type here to search">
-        <input type="submit" value="Search" name="search">
-    </form>
-    <?php endif ?>
-    
-    <div id="category_bar">
-        <ul>
-            <li><a href="shop.php?result_start=0">All categories</a></li>
+        
+        <div id="category_bar" class="row row-cols-8 gx=1">
+            
+            <a class="col" href="shop.php?result_start=0"><div class="col box">All categories</div></a>
             <?php foreach ($categories1 as $category) : ?>
-                <li> <a href="shop.php?category_id=<?= $category['category_id']?>&result_start=0 "> <?= $category['category_name'] ?> </a> </li>
+                <a class="col" href="shop.php?category_id=<?= $category['category_id']?>&result_start=0 "><div class="col box"> <?= $category['category_name'] ?> </div></a>
             <?php endforeach ?>
-        </ul>
+            
 
-    </div>
+        </div>
+    </div> 
+
 
     <div id="products">
 
-    <?php if($row):
-    $products = array_slice($row, $result_start, $result_start+ $no_of_results);
-    foreach ($products as $product): ?>
+        <?php if($row):
+        $products = array_slice($row, $result_start, $result_start+ $no_of_results);
+        foreach ($products as $product): ?>
 
-    <div id= "product_div" style="border:solid 1px black; margin:5px">
-         
-        <div>
-            <a href="view_item.php?id=<?=$product['product_id']?>"><h3> <?= $product['name'] ?> </h3></a> 
-            <h2><?= $product['company'] ?></h2>
-            <h2><?= $product['item_condition'] ?></h2>
-            <h3><?= $product['price'] ?></h3>
+        <div class="product_div border border-dark border-1 border-opacity-50 m-2 p-3">
             
-            <?php 
-            if($product['image']):
-                $folder = "./uploads/". $product['image'];
-                ?>
-                <img src="<?= $folder ?>" alt="iamge here">
-            <?php endif ?>
+            <div class="info">
+                <a href="view_item.php?id=<?=$product['product_id']?>"><h3> <?= $product['name'] ?> </h3></a> 
+                <h2><?= $product['company'] ?></h2>
+                <h2><?= $product['item_condition'] ?></h2>
+                <h3><?= $product['price'] ?></h3>
+                
+                <?php 
+                if($product['image']):
+                    $folder = "./uploads/". $product['image'];
+                    ?>
+                    <img src="<?= $folder ?>" alt="iamge here">
+                <?php endif ?>
+            </div>
         </div>
+        <?php endforeach ; ?>
     </div>
-    <?php endforeach ;
 
-    else: ?>
-    <h2> No Results Found</h2>
-    <a href="shop.php?result_start=0">Click here to view all products</a>
-    <?php endif ?>
+
+        <?php    else: ?>
+    <div id="no_result">
+        <h2> No Results Found</h2>
+        <a href="shop.php?result_start=0">Click here to view all products</a>
+        <?php endif ?>
 
     </div>
 
     <ul>
-    <?php if($row):
+    <?php if($row): ?>
 
-        if($result_start>0){ ?>
+    <div id="page_links">
+
+        <?php    if($result_start>0){ ?>
             <li><a href="shop.php?result_start=<?= $result_start - $no_of_results ?>"> <<< </a></li>
         <?php } 
 
@@ -236,9 +247,12 @@ function loading_categories(){
             <li><a href="shop.php?result_start=<?= $result_start + $no_of_results ?>"> >>></a></li>
         <?php } 
     endif ?>
+    </div>
     </ul>
+</div>
 
     <?php include_once 'footer.php'; ?>
+    
 </body>
 
 </html>
