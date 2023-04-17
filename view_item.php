@@ -47,7 +47,6 @@ function loading_comments(){
     
         //executing sql
     $statement->execute();
-    //$row2 = $statement->fetch();
     $comments = [];
     while ($x = $statement->fetch() ){
         $comments[] = $x;
@@ -64,11 +63,14 @@ function adding_comment(){
 
     //check if user is logged in
     //check for required info
-  if ($_POST['user_comment'] && $_POST['user_name'] && $_POST['user_email']){
+  if ($_POST['user_comment']){
 
         //sanitizing all the informatiom
          
         $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if(trim($user_name =='')){
+            $user_name = "anonymous";
+        }
         $user_email = filter_input(INPUT_POST, 'user_email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $comment1 = filter_input(INPUT_POST, 'user_comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $rating = filter_input(INPUT_POST, 'rating', FILTER_SANITIZE_NUMBER_INT);
@@ -171,11 +173,16 @@ if(isset($_POST['add_comment'])){
         <form  method="post">
             <h2>Add a Comment/ Write a review</h2>
 
-            <label for="user_name">User Name *</label>
-            <input type="text" name="user_name" >
+            <?php if($login_user): ?>
+                <input type="hidden" name="user_name" value="<?= $_SESSION['user_name'] ?>">
+                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+            <?php else: ?>
+                <label for="user_name">User Name </label>
+                <input type="text" name="user_name" >
 
-            <label for="user_email">email *</label>
-            <input type="email" name="user_email" >
+                <label for="user_email">email </label>
+                <input type="email" name="user_email" >
+            <?php endif ?>
         
             <label for="rating">Rating</label>
             <input type="int" name="rating">
@@ -184,7 +191,7 @@ if(isset($_POST['add_comment'])){
             <textarea name="user_comment" cols="30" rows="10"></textarea>
 
             <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
-            <input type="hidden" name="user_id">
+            
             <input type="submit" value="Add Comment" name="add_comment">
 
         </form>

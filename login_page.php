@@ -1,5 +1,24 @@
 <?php
 require('scripts/connect.php');
+
+
+$error_message = "";
+if($_GET){
+    if(isset($_GET['error'])){
+
+        $error = $_GET['error'];
+
+        if($error == "'empty_fields'"){
+            $error_message = "You have empty fields";
+        }
+        else if($error == "'doesnot_exist'"){
+            $error_message = "User does not exist";
+        }
+        else if($error == "'wrong_pass'"){
+            $error_message = "Username/Password do not match";
+        }  
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +41,11 @@ require('scripts/connect.php');
     <input type="password" name="pwd" placeholder= "Password">
     <input type="submit" value="Log In" name="login"> 
 </form>
+
+<?php if($_GET): ?>
+    <h3><?= $error_message ?></h3>
+<?php endif ?>
+
 <?php include_once 'footer.php'; ?>
 </body>
 </html>

@@ -46,11 +46,11 @@ function createUser($full_name, $user_name, $pass, $email, $by_admin){
 
     $statement->execute();
 
-    if(!$by_admin){
+    if($by_admin == 0){// not by admin
         login_user($user_name, $pass);
     }
     else{
-        header("location: ../admin/users.admin.php");
+        header("location: ../admin/admin.php");
     }
 }
 

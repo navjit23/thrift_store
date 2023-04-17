@@ -1,7 +1,16 @@
 <?php
 
-function imageResize($image){
-    $og_image = imagecreatefrompng($image);
+function imageResize($image, $filetype){
+    if($filetype == 'png'){
+        $og_image = imagecreatefrompng($image);
+    }
+    else if($filetype == 'jpg' ||$filetype == 'jpeg' ){
+        $og_image = imagecreatefromjpeg($image);
+    }
+    else{
+        header("Location: ../index.php");
+        exit();
+    }   
     $width = imagesx($og_image);
     $height= imagesy($og_image);
 
@@ -16,6 +25,7 @@ function imageResize($image){
 }
 
 $image_path = $_GET['path'];
-imageResize($image_path);
+$filetype = $_GET['filetype'];
+imageResize($image_path, $filetype);
 header("Location: ../index.php");
 ?>

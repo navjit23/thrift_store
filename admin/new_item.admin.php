@@ -113,10 +113,13 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     if ($file_upload_detected) { 
 
         if(file_is_an_image($temporary_file_path, $file_filename)){
-        $new_file_path  = file_upload_path($file_filename);
-        move_uploaded_file($temporary_file_path, $new_file_path);
-        upload_new_item($file_filename);
-        header("Location: ../scripts/fileresize.php?path=$new_file_path");
+            
+            $new_file_path  = "../uploads/".$file_filename;
+            move_uploaded_file($temporary_file_path, $new_file_path);
+            upload_new_item($file_filename);
+
+            $filetype = pathinfo($file_filename, PATHINFO_EXTENSION);
+            header("Location: ../scripts/fileresize.inc.php?path=$new_file_path&filetype=$filetype");
         }
         else{
             //here should be a prompt and after wards normal file uploaded
@@ -144,7 +147,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 </head>
 <body>
 <?php
-    include_once '../header.php';
+    include_once 'header.admin.php';
 ?>
     
    
@@ -185,6 +188,6 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <input type="submit" value="Add Product">
         
     </form>
-    <?php include_once '../footer.php'; ?>
+
 </body>
 </html>

@@ -2,35 +2,36 @@
 
 to do by 13April:
 create CATEGORIES table DONE
-add categories 2.4 (need user table), 2.8 DONE, 3.2 DONE
+add categories 2.4 (DONE), 2.8 DONE, 3.2 DONE
 comments: 2.5 DONE, 2.9 DONE
 
 CURRENTLY WORKING ON:
- 3.3
+ 3.3, 7.1, 7.2
 
 
 fix bugs: 
-search bar on shop page, DONE
+
 search types need to stick after i search
-no item found remaining DONEEEE
-can only upload png
-for all categories sort not working DONE
-in edit page category and desription
-in the views also need the email, rating and user when applied DONE
-comments need to be sorted
+can only upload png ITHINKDONE
+NEED to work on the shop.phg to view the filtering conditions
+NEED t change the links for shop.php (for pagination)
+test edit page
+view list of avail categories in category page
+new images not added in edit.php
+error handler if no admin go to admin pagees
 
-NEED to work on the shop.png to view the filtering conditions
-NEED t change the links for shop.php
+
 By next week
-images 6.2, 6.4, 
-create USER table
-users 7.1, 7.4, 7.5, 7.2
-passwords: 7.3
+images 6.2, 6.4 DONE, 
+create USER table DONE
+users 7.1DONE, 7.4 DONE, 7.5 DONE, 7.2 DONE
+passwords: 7.3 KINDA
 
-after user table: 2.2, 2.3, 2.4,
+after user table: 2.2 DONE, 2.3 DONE, 2.4 DONE , 2.1
 
 sitting at about 70-75 marks 
+2.10, 2.6?
+9.1, 5.1, 5.2, 5.3, 5.4 5.5
+4.1, 4.2, 4.3 
 
-
-
-have an admin page where he can add categories and view/moderate comments have more editing access for him
+not check for unique image during remove

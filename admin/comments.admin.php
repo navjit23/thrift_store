@@ -30,7 +30,7 @@ function loading_comments(){
     global $db;
 
 
-    $load_comments = "SELECT * FROM comments;";
+    $load_comments = "SELECT * FROM comments ORDER BY date DESC;";
         // preparring sql for executoin
     $statement = $db->prepare($load_comments);
         
@@ -95,7 +95,7 @@ function delete_comment(){
 </head>
 <body>
 <?php
-    include_once '../header.php';
+    include_once 'header.admin.php';
 ?>
 <?php if(! $edit_mode): ?>
 
@@ -155,7 +155,7 @@ function delete_comment(){
 
     </div>
     <?php endif ?>
-    <?php include_once '../footer.php'; ?>
+
 </body>
 
 

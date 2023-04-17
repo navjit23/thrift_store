@@ -19,11 +19,13 @@ if($_SESSION['user_id'] != 1){
 // To DELETE
 if(isset($_POST['delete'])){
     $query = "DELETE FROM products WHERE product_id= :id";
+    $current_image_path = filter_input(INPUT_POST, 'current_image_path', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $statement= $db->prepare($query);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
     if($statement->execute()){
         echo("Success");
+        unlink($current_image_path);
         header("Location: ../index.php");
     } // add an alert to confirm delete
 }
@@ -48,6 +50,31 @@ function loading_categories(){
 $categories = loading_categories();
 
 
+// TO LOAD A BLOG
+
+
+if(isset($_GET['id'])){
+    $blogs = "SELECT * FROM products WHERE product_id=:id "; 
+    $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+    // preparring sql for executoin
+    $statement = $db->prepare($blogs);
+
+    //bind
+    $statement->bindValue(':id', $id, PDO::PARAM_INT);
+
+    //executing sql
+    $statement->execute();
+    $row = $statement->fetch();
+
+    $folder = "../uploads/". $row['image'];
+    }
+    else{
+        $id= false;
+    }
+
+
+    //$folder = "../uploads/". $row['image'];
 
 //TO SAVE CHANGES TO BLOG
 if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
@@ -61,6 +88,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $current_image_path = filter_input(INPUT_POST, 'current_image_path', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     $filename = $_FILES['new_image']['name'];
     
@@ -71,7 +99,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     if(isset($_POST['del_image'])){
         $query .= "UPDATE products SET image = NULL WHERE product_id=:id;";
         // for future delete the image from db
-        
+        unlink($current_image_path);
     }
 
     if(trim($filename) != '' ){
@@ -103,31 +131,12 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         //  execute() will check for possible SQL injection and remove if necessary
         if($statement->execute()){
             echo("Success");
-            header("Location: ../index.php");
+            
+           // header("Location: ../index.php");
         }
         
 }
 
-// TO LOAD A BLOG
-
-
-elseif(isset($_GET['id'])){
-    $blogs = "SELECT * FROM products WHERE product_id=:id "; 
-    $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
-    // preparring sql for executoin
-    $statement = $db->prepare($blogs);
-
-    //bind
-    $statement->bindValue(':id', $id, PDO::PARAM_INT);
-
-    //executing sql
-    $statement->execute();
-    $row = $statement->fetch();
-    }
-    else{
-        $id= false;
-    }
 
 
 ?>
@@ -143,7 +152,7 @@ elseif(isset($_GET['id'])){
 </head>
 <body>
 <?php
-    include_once '../header.php';
+    include_once 'header.admin.php';
 ?>
     
 
@@ -187,15 +196,16 @@ elseif(isset($_GET['id'])){
         <label for="color">Color</label>
         <input type="text" name="color" value="<?= $row['color'] ?>">
     
-        <?php $folder = "./uploads/". $row['image']; ?>
-        <img src="<?= $folder ?>" alt="iamge here">
+        <?php if( $row['image']): ?>
+            <img src="<?= $folder ?>" alt="image here">
+            
+            <label for="del_image">Check Here to Delete Image: </label>
+            <input type="checkbox" name="del_image" id="del_image" value="delete_image">;
+            <input type="hidden" name="current_image_path" value="<?= $folder ?>">
+        <?php endif ?>
 
         <label for="new_image">Click Here to Change the Image</label>
         <input type="file" name="new_image" id="new_image">
-
-        <label for="del_image">Check Here to Delete Image: </label>
-        <input type="checkbox" name="del_image" id="del_image" value="delete_image">;
-
 
         <label for="description">Description</label>
         <textarea name="description" id="description" cols="30" rows="10" value="<?= $row['description'] ?>"></textarea>
