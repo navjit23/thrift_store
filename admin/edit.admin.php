@@ -220,8 +220,9 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <textarea name="description" id="description" class="form-control" rows="10" value="<?= $row['description'] ?>">"<?= $row['description'] ?>"</textarea>
         
 
-        <input type="submit" class="btn btn-primary" value="Update" name="update">
-        <input type="submit" class="btn btn-outline-secondary" name='delete' value="Delete">
+        
+        <input type="submit" class="btn btn-primary" onclick="validate()" value="Update" name="update">
+        <input type="submit" class="btn btn-outline-secondary" onclick="checker()" name='delete' value="Delete">
 
     </form>
     </div>
@@ -231,6 +232,29 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         exit();
 
      endif ?>
+<?php
+    include_once 'header.admin.php';
+?>
+<script>
+    function checker(){
+        var result = confirm('Do you want to delete the item');
+        if(result == false){
+            event.preventDefault();
+        }
+    }
 
+    function validate(){
+        var del_image = document.getElementById('del_image');
+        if(del_image.checked){
+            var update_no_image = confirm("Image will be deleted");
+            if(update_no_image == false){
+            event.preventDefault();
+        }   
+        }
+
+    }
+
+
+</script>
 </body>
 </html>

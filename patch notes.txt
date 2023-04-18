@@ -28,7 +28,9 @@ footers
 non admin name header
 rearrange shop and viiew item things for better understanind
 MAKE THE INDEX PAGE BETTER
+NEW ITEM WITH NO IMAGE NEEDS FIX
 RESTRORE NON PAGINATED SEARCH PAGE
+try paginated links with form and then post 
 
 
 By next week

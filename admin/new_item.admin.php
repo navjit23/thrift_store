@@ -73,9 +73,7 @@ function upload_new_item($image_file){
     $statement->bindValue(':description', $description);
 
     //  Execute the INSERT.
-        if($statement->execute()){
-            echo "Success";
-        }
+    $statement->execute();
 
 }
 
@@ -124,10 +122,15 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         else{
             //here should be a prompt and after wards normal file uploaded
             upload_new_item(`NULL`);
+            echo"<script> alert('The file was not uploaded because it was not an image. ') </script>";
+            header("../index.php");
+            exit();
         }
     }
     else{
         upload_new_item(`NULL`);
+        header("../index.php");
+            exit();
     }
 
     
@@ -154,7 +157,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
    
 
 <div class="container">
-    <form action="new_item.admin.php" method="post" enctype="multipart/form-data"> 
+    <form action="" method="post" enctype="multipart/form-data"> 
         
         <label for="productName" class="form-label">Name</label>
         <input type="text" name="productName" class="form-control">
@@ -177,7 +180,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         </div>
         <br>
 
-        <label for="category" class="form-label">Category</label> <!-- maybe createa   a dropdown-->
+        <label for="category" class="form-label">Category</label>
         <select class="form-control" name="category">
             <?php foreach($row as $category_type): ?>
                 <option class="form-control" value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
