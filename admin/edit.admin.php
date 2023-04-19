@@ -8,7 +8,9 @@
 
 ****************/
 
-require('../scripts/connect.php');
+//require('../scripts/connect.php');
+include_once '../scripts/functions.inc.php';
+
 session_start();
 
 if($_SESSION['user_id'] != 1){
@@ -27,26 +29,10 @@ if(isset($_POST['delete'])){
         echo("Success");
         unlink($current_image_path);
         header("Location: ../index.php");
-    } // add an alert to confirm delete
+        exit();
+    } 
 }
 
-function loading_categories(){
-    global $db;
-
-    $query = "SELECT * FROM categories ;";
-        // preparring sql for executoin
-    $statement = $db->prepare($query);
-    
-        //executing sql
-    $statement->execute();
-    $categories = [];
-    while ($x = $statement->fetch() ){
-        $categories[] = $x;
-        
-    }
-    
-    return $categories;
-}
 $categories = loading_categories();
 
 
@@ -74,7 +60,7 @@ if(isset($_GET['id'])){
     }
 
 
-    //$folder = "../uploads/". $row['image'];
+    
 
 //TO SAVE CHANGES TO BLOG
 if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
@@ -98,12 +84,12 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 
     if(isset($_POST['del_image'])){
         $query .= "UPDATE products SET image = NULL WHERE product_id=:id;";
-        // for future delete the image from db
+        //  delete the image from db yet to ccheck if its unique
         unlink($current_image_path);
     }
 
     if(trim($filename) != '' ){
-        // for future delete the image from db if its UNIQUE 
+        
         $query .= "UPDATE products SET image= :image WHERE product_id= :id;";
     }
 
@@ -129,12 +115,38 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
 
      //  Execute the INSERT.
         //  execute() will check for possible SQL injection and remove if necessary
-        if($statement->execute()){
-            echo("Success");
+        $statement->execute();
+        
             
+            $file_filename        = $_FILES['new_image']['name'];
+            $temporary_file_path  = $_FILES['new_image']['tmp_name'];    
+            $file_upload_detected = isset($_FILES['new_image']) && ($_FILES['new_image']['error'] === 0);
+            $upload_error_detected = isset($_FILES['new_image']) && ($_FILES['new_image']['error'] > 0);
+
+            if (trim($filename) != '' ) { 
+
+                if(file_is_an_image($temporary_file_path, $file_filename)){
+                    
+                    $new_file_path  = "../uploads/".$file_filename;
+                    move_uploaded_file($temporary_file_path, $new_file_path);
+                   
+
+                    $filetype = pathinfo($file_filename, PATHINFO_EXTENSION);
+                    header("Location: ../scripts/fileresize.inc.php?path=$new_file_path&filetype=$filetype");
+                }
+                else{
+                    //here should be a prompt and after wards normal file uploaded
+                    
+                    echo"<script> alert('The file was not uploaded because it was not an image. ') </script>";
+                    header("location: ../index.php");
+                    exit();
+                }
+            }
+            else{
            header("Location: ../index.php");
+            }
            exit();
-        }
+        
         
 }
 
@@ -217,7 +229,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         <input type="file" class="form-control" name="new_image" id="new_image">
 
         <label for="description">Description</label>
-        <textarea name="description" id="description" class="form-control" rows="10" value="<?= $row['description'] ?>">"<?= $row['description'] ?>"</textarea>
+        <textarea name="description" id="description" class="form-control" rows="10" value="<?= $row['description'] ?>"><?= $row['description'] ?></textarea>
         
 
         

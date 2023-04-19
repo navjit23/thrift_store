@@ -11,7 +11,7 @@ function login_user($user_name, $pass){
         exit();
     }
 
-    print_r ($user);
+    //print_r ($user);
     $pwd_hashed = $user['password'];
     $check_password = password_verify($pass, $pwd_hashed);
 

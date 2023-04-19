@@ -12,18 +12,11 @@ CURRENTLY WORKING ON:
 fix bugs: 
 
 search types need to stick after i search
-can only upload png ITHINKDONE
 NEED to work on the shop.phg to view the filtering conditions
-SHOW NUMBER OF RESULTS FOUND
-NEED t change the links for shop.php (for pagination)
-test edit page DONE
-view list of avail categories in category page DONE
+
 new images not added in edit.php
 error handler if no admin go to admin pagees
-description and comment in editing not loading/saving DONE
-redirecting edit page back DONE
-new item with no pic redirect DONE
-item condition and rarity 0 dont show
+
 footers
 non admin name header
 rearrange shop and viiew item things for better understanind
@@ -32,6 +25,15 @@ NEW ITEM WITH NO IMAGE NEEDS FIX
 RESTRORE NON PAGINATED SEARCH PAGE
 try paginated links with form and then post 
 
+DONE:
+description and comment in editing not loading/saving DONE
+redirecting edit page back DONE
+new item with no pic redirect DONE
+test edit page DONE
+view list of avail categories in category page DONE
+can only upload png ITHINKDONE
+SHOW NUMBER OF RESULTS FOUND
+item condition and rarity 0 dont show DOE
 
 By next week
 images 6.2, 6.4 DONE, 

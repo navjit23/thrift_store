@@ -8,20 +8,61 @@
 	background-color: orange;
 	padding: 10px;
 }
+.grey{
+	background-color: rgba(119, 136, 153, 0.26);
+}
 
 /* shop.php*/
 .product_div{
 	display: flex;
-}
-.product-div .info{
-	
+	color: grey;
+	background-color: lightcyan
 }
 
+.product_div a{
+	text-decoration: none;
+	color: grey;
+}
+.product_div:hover{
+	background-color: rgb(167, 189, 189);
+}
+.product_div h3{
+	color: black;
+}
+	.product_div img{
+		width: 200px;
+	}
+	.product_div #with_img{
+		text-align: justify;
+		padding-left: 10%;
+		flex:1 ;
+
+	}
+	.product_div #no_img{
+		flex:1;
+		padding-left: 10%;
+	}
+
+
+#category_bar{
+	display: flex;
+	flex-wrap: wrap;
+}
+	#category_bar a{
+		text-decoration: none;
+	} 
+		#category_bar a div{
+		text-align: center;
+		background-color: grey;
+		color: white;
+		}
+	
+	
 
 /* admin page*/
 .admin-page{
 	margin-top: 20px;
-	background-color: orange;
+	background-color: lightslategray;
 	color: black;
 }
 .admin-page a{
@@ -31,9 +72,24 @@
 }
 .admin-page a div{
 	min-width: 200px;
-	min-height: 100px;
+	min-height: 70px;
+	margin: 20px;
+	text-align: center;
+	line-height: 70px;
 }
 .admin-page a :hover{
 	background-color: black;
-	color: orange
+	color: orange;
+	font-size: larger;
+	font-weight: bolder;
+}
+.admin-page a div:hover{
+	height: 80px;
+}
+
+
+
+/* view_item page*/
+.view_item{
+	background-color: lightcyan;
 }

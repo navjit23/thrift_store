@@ -122,7 +122,7 @@ if(isset($_POST['add_comment'])){
 <?php
     include_once 'header.php';
 ?>
-<div class="container">
+<div class="container view_item">
 
     <?php if($_GET['id']): ?>
         <div>
@@ -131,9 +131,16 @@ if(isset($_POST['add_comment'])){
         <?php endif ?>
 
         <h1><?= $row['name'] ?></h1>
+        <h6><?= date('F d/Y g:i a', strtotime( $row['date']) ) ?> </h6>
         <h3><?= $row['company'] ?></h3>
-        <h2><?= $row['price'] ?></h2>
-    
+        <h2>Price: $<?= $row['price'] ?></h2>
+        <?php if ($row['rarity'] > 0): ?>
+            <h4>Rarity: <?= $row['rarity'] ?></h4>
+        <?php endif ;
+        
+        if ($row['item_condition'] > 0): ?>
+            <h4>Condition: <?= $row['item_condition'] ?></h4>
+        <?php endif ?>
         <?php 
         if($row['image']):
             $folder = "./uploads/". $row['image']; ?>
@@ -147,20 +154,19 @@ if(isset($_POST['add_comment'])){
 
         <!--VIEW COMMENTS -->
         <!--- COMMENT BOX--->
-        <div id="comment_box" style="border: 1px solid black">
+        <div id="comment_box" class="container border border-3 grey mb-3 p-4">
             
             <?php if(count($row3) > 0):
             foreach ($row3 as $commentData): ?>
                 <div>
             
                 <h2><?= $commentData['user_name'] ?></h2>
-                <p><?= $commentData['comment'] ?></p>
-
+                <h6><?= date('F d/Y g:i a', strtotime( $commentData['date']) ) ?></h6>   
                 <?php if($commentData['rating']!=0): ?>
-                <h3>Rating: <?= $commentData['rating'] ?> </h3>
+                <h4>Rating: <?= $commentData['rating'] ?> </h4>
                 <?php endif ?>
-                <h6>date here**********</h6>
-
+                <p><?= $commentData['comment'] ?></p>
+                
                 </div>
             <?php endforeach;
             else: ?>
@@ -172,31 +178,33 @@ if(isset($_POST['add_comment'])){
         </div>
         
         <!--ADD COMMENTS (for future, js should load this box when user click on add a comment also have an option for image upload-->
-        <form  method="post">
-            <h2>Add a Comment/ Write a review</h2>
+        <div class="container grey">
+            <form  method="post">
+                <h2>Add a Comment/ Write a review</h2>
 
-            <?php if($login_user): ?>
-                <input type="hidden" name="user_name" value="<?= $_SESSION['user_name'] ?>">
-                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
-            <?php else: ?>
-                <label for="user_name">User Name </label>
-                <input type="text" name="user_name" >
+                <?php if($login_user): ?>
+                    <input type="hidden" name="user_name" value="<?= $_SESSION['user_name'] ?>">
+                    <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+                <?php else: ?>
+                    <label for="user_name" class="form-label">User Name </label>
+                    <input type="text" class="form-control" name="user_name" >
 
-                <label for="user_email">email </label>
-                <input type="email" name="user_email" >
-            <?php endif ?>
-        
-            <label for="rating">Rating</label>
-            <input type="int" name="rating">
-
-            <label for="user_comment">Comment</label>
-            <textarea name="user_comment" cols="30" rows="10"></textarea>
-
-            <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
+                    <label for="user_email" class="form-label">email </label>
+                    <input type="email" class="form-control" name="user_email" >
+                <?php endif ?>
             
-            <input type="submit" value="Add Comment" name="add_comment">
+                <label for="rating" class="form-label">Rating</label>
+                <input type="int" class="form-control" name="rating">
 
-        </form>
+                <label for="user_comment" class="form-label">Comment</label>
+                <textarea name="user_comment" class="form-control" rows="10"></textarea>
+
+                <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
+                
+                <input type="submit" class="btn btn-outline-dark" value="Add Comment" name="add_comment">
+
+            </form>
+        </div>
 </div>
 
     <?php else : ?>

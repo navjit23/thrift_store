@@ -1,6 +1,7 @@
 <?php 
 
-require('../scripts/connect.php');
+//require('../scripts/connect.php');
+include_once '../scripts/functions.inc.php';
 
 session_start();
 if($_SESSION['user_id'] != 1){
@@ -9,7 +10,7 @@ if($_SESSION['user_id'] != 1){
 }
 // Uploading an image
 
-
+/*
 // file_upload_path() - Safely build a path String that uses slashes appropriate for our OS.
 // Default upload path is an 'uploads' sub-folder in the current folder.
 function file_upload_path($original_filename, $upload_subfolder_name = 'uploads') {
@@ -76,9 +77,10 @@ function upload_new_item($image_file){
     $statement->execute();
 
 }
-
+*/
 
 // loading the categories
+/*
 function loading_categories(){
     global $db;
 
@@ -96,6 +98,7 @@ function loading_categories(){
     
     return $categories;
 }
+*/
 
 $row = loading_categories();
 
@@ -123,13 +126,13 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
             //here should be a prompt and after wards normal file uploaded
             upload_new_item(`NULL`);
             echo"<script> alert('The file was not uploaded because it was not an image. ') </script>";
-            header("../index.php");
+            header("location: ../index.php");
             exit();
         }
     }
     else{
         upload_new_item(`NULL`);
-        header("../index.php");
+        header("location: ../index.php");
             exit();
     }
 

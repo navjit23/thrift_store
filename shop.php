@@ -14,15 +14,11 @@ if(array_key_exists('user_id', $_SESSION ) ){
     }
 }
 
-// result end = rStart * whatever the no.of results
-//try saving search results in sessions
-// when click on hyperlinks also clear the cookie
+
 // have a bla bla bla results found
 
 // LOADING THE PAGE
-// for search pagination
-$result_start = (int)$_GET['result_start'];
-$no_of_results = 5 ;// make a dropdown or something so the user can change it later
+
 $categories1 = loading_categories();
 
 // check for GET value, if true category is filtered from here
@@ -42,13 +38,8 @@ if($_POST){
     }
 
     $row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);
-    echo"post";
 }
-//loading a page with cookies for paginated results
-else if(array_key_exists( 'row_results', $_COOKIE) ){
-    $row = json_decode( $_COOKIE['row_results'] , true);
-    echo"sesso";
-}
+
 // default page loadup with/without categories filtered
 else{
     if(array_key_exists( 'category_id', $_GET)){
@@ -66,15 +57,7 @@ else{
         $results[] = $x;    
     }
     $row = $results;
-    echo"else";
 } 
-
-$no_of_pages = count($row) % $no_of_results ;
-
-$now = time();
-
-//	Set visit_count cookie. Expires in 2 hours
-setcookie('row_results', json_encode($row), $now + 60 * 60 *2);
 
 
 /* search Bar function takes 4 inputs to filter data and return the query result in an array
@@ -183,39 +166,65 @@ function loading_categories(){
             <input type="submit" value="Search" name="search">
         </form>
         <?php endif ?>
-        
-        <div id="category_bar" class="row row-cols-8 gx=1">
-            
-            <a class="col" href="shop.php?result_start=0"><div class="col box">All categories</div></a>
+
+        <div id="category_bar">
+        <a class="col" href="shop.php?result_start=0"><div class="col box">All categories</div></a>
             <?php foreach ($categories1 as $category) : ?>
                 <a class="col" href="shop.php?category_id=<?= $category['category_id']?>&result_start=0 "><div class="col box"> <?= $category['category_name'] ?> </div></a>
             <?php endforeach ?>
-            
-
         </div>
     </div> 
 
 
     <div id="products">
 
-        <?php if($row):
-        $products = array_slice($row, $result_start, $result_start+ $no_of_results);
-        foreach ($products as $product): ?>
+        <?php if($row): ?>
+        <h3> <?= count($row)?> Results Found !!!</h3>
+        <?php foreach ($row as $product): ?>
 
-        <div class="product_div border border-dark border-1 border-opacity-50 m-2 p-3">
+        <div class=" border border-dark border-1 border-opacity-50 m-2 p-3 rounded">
             
-            <div class="info">
-                <a href="view_item.php?id=<?=$product['product_id']?>"><h3> <?= $product['name'] ?> </h3></a> 
-                <h2><?= $product['company'] ?></h2>
-                <h2><?= $product['item_condition'] ?></h2>
-                <h3><?= $product['price'] ?></h3>
+            <div class="product_div">
+                <a href="view_item.php?id=<?=$product['product_id']?>">
+                    <?php 
+                    if($product['image']):
+                        $folder = "./uploads/". $product['image'];
+                        ?>
+                        <img src="<?= $folder ?>" alt="image here">
+
+                        <div id="with_img">
+                            <h3> <?= $product['name'] ?> </h3></a> 
+                            <h6><?= date('F d/Y g:i a', strtotime( $product['date']) ) ?> </h6>
+                            <?php if ($product['rarity'] > 0): ?>
+                                <h4>Rarity: <?= $product['rarity'] ?></h4>
+                            <?php endif ?>
+                            <h4> <?= $product['company'] ?></h4>
+                            <h3> $<?=$product['price'] ?></h3>
+                            <?php if(strlen($product['description']) > 200): ?>
+                                <p><?= substr($product['description'], 0, 200) ?>.... </p>
+                            <?php else: ?>
+                            <p><?= $product['description'] ?></p>
+                            <?php endif ?>
+                        </div>
+                    <?php else:?>
+
+                    <div id="no_img">
+                        <h3> <?= $product['name'] ?> </h3></a> 
+                        <h6><?= date('F d/Y g:i a', strtotime( $product['date']) ) ?> </h6>
+                        <?php if ($product['rarity'] > 0): ?>
+                            <h4>Rarity: <?= $product['rarity'] ?></h4>
+                        <?php endif ?>
+                        <h4> <?= $product['company'] ?></h4>
+                        <h3> $<?=$product['price'] ?></h3>
+                        <?php if(strlen($product['description']) > 200): ?>
+                            <p><?= substr($product['description'], 0, 200) ?>.... </p>
+                        <?php else: ?>
+                        <p><?= $product['description'] ?></p>
+                        <?php endif ?>
+                    </div>
+                    
+                    <?php endif ?>
                 
-                <?php 
-                if($product['image']):
-                    $folder = "./uploads/". $product['image'];
-                    ?>
-                    <img src="<?= $folder ?>" alt="iamge here">
-                <?php endif ?>
             </div>
         </div>
         <?php endforeach ; ?>
@@ -231,28 +240,13 @@ function loading_categories(){
     </div>
 
     <ul>
-    <?php if($row): ?>
-
-    <div id="page_links">
-
-        <?php    if($result_start>0){ ?>
-            <li><a href="shop.php?result_start=<?= $result_start - $no_of_results ?>"> <<< </a></li>
-        <?php } 
-
-        for ($page_number = 1; $page_number <=$no_of_pages+1; $page_number ++ ) :?>
-            <li><a href="shop.php?result_start=<?= $page_number * $no_of_results ?>"><?=$page_number ?></a></li>
-        <?php endfor ;
-
-        if($result_start< count($row)-$no_of_results ){ ?>
-            <li><a href="shop.php?result_start=<?= $result_start + $no_of_results ?>"> >>></a></li>
-        <?php } 
-    endif ?>
-    </div>
-    </ul>
-</div>
+    
 
     <?php include_once 'footer.php'; ?>
     
 </body>
 
 </html>
+
+
+

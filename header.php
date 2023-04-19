@@ -24,9 +24,9 @@
                         <li class="nav-item"><a href="scripts/logout.inc.php" class="nav-link" >Log Out</a></li>
 
                         <?php if($_SESSION['user_id'] == 1): ?>
-                            <li class="nav-item"><a href="admin/admin.php" class="nav-link" >Admin !</a></li>
+                            <li class="nav-item"><a href="admin/admin.php" class="nav-link fw-bolder" >Admin !</a></li>
                         <?php else: ?>
-                        <li class="nav-item"><?= $_SESSION['user_name'] ?></li>
+                        <li class="nav-item"><a href="#" class="nav-link fw-bolder"><?= $_SESSION['user_name'] ?></a></li>
                     <?php endif;
                     else: ?>
                         <li class="nav-item"><a href="signup_page.php" class="nav-link" >Sign Up</a></li>
