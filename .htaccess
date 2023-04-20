@@ -1,0 +1,11 @@
+# turn rewrite engine on
+
+RewriteEngine on
+
+RewriteRule ((js|css|images)\/.*)$ /$1 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#rewrite for view_item?id=1&name=Chair
+RewriteRule ^view_item/([0-9]+)/([0-9a-z-A-Z-]+) view_item.php?id=$1&name=$2 [NC,L]

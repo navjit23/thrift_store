@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="nav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="index.php" class="nav-link" >Home</a></li>
-                <li class="nav-item"><a href="shop.php?result_start=0" class="nav-link" >Shop</a></li>
+                <li class="nav-item"><a href="shop.php" class="nav-link" >Shop</a></li>
                 <li class="nav-item"><a href="contact_us.php" class="nav-link" >Contact Us</a></li>
 
                 <?php

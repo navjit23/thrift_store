@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="admin_nav">
 <ul class="navbar-nav">
     <li class="nav-item"><a href="../index.php" class="nav-link text-white">Home</a></li>
-    <li class="nav-item"><a href="../shop.php?result_start=0" class="nav-link  text-white">Shop</a></li>
+    <li class="nav-item"><a href="../shop.php" class="nav-link  text-white">Shop</a></li>
     <li class="nav-item"><a href="../contact_us.php" class="nav-link text-white">Contact Us</a></li>
     <li class="nav-item"><a href="new_category.admin.php" class="nav-link text-white">Categories</a></li>
     <li class="nav-item"><a href="users.admin.php" class="nav-link text-white">Users</a></li>

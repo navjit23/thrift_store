@@ -168,9 +168,9 @@ function loading_categories(){
         <?php endif ?>
 
         <div id="category_bar">
-        <a class="col" href="shop.php?result_start=0"><div class="col box">All categories</div></a>
+        <a class="col" href="shop.php"><div class="col box">All categories</div></a>
             <?php foreach ($categories1 as $category) : ?>
-                <a class="col" href="shop.php?category_id=<?= $category['category_id']?>&result_start=0 "><div class="col box"> <?= $category['category_name'] ?> </div></a>
+                <a class="col" href="shop.php?category_id=<?= $category['category_id']?>&name=<?= $category['category_name'] ?> "><div class="col box"> <?= $category['category_name'] ?> </div></a>
             <?php endforeach ?>
         </div>
     </div> 
@@ -185,10 +185,10 @@ function loading_categories(){
         <div class=" border border-dark border-1 border-opacity-50 m-2 p-3 rounded">
             
             <div class="product_div">
-                <a href="view_item.php?id=<?=$product['product_id']?>">
+                <a href="view_item/<?=$product['product_id']?>/<?= str_replace(" ", '-', $product['name']) ?>">
                     <?php 
                     if($product['image']):
-                        $folder = "./uploads/". $product['image'];
+                        $folder = "uploads/". $product['image'];
                         ?>
                         <img src="<?= $folder ?>" alt="image here">
 
@@ -234,7 +234,7 @@ function loading_categories(){
         <?php    else: ?>
     <div id="no_result">
         <h2> No Results Found</h2>
-        <a href="shop.php?result_start=0">Click here to view all products</a>
+        <a href="shop.php">Click here to view all products</a>
         <?php endif ?>
 
     </div>

@@ -27,6 +27,6 @@ if($_SESSION['user_id'] != 1){
         <a href="../shop.php?result_start=0"><div>View/ Edit Items</div></a>
     </div>
 
-<?php include_once'footer.admin.php' ?>
+<?php include_once 'footer.admin.php' ?>
 </body>
 </html>

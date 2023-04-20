@@ -105,6 +105,12 @@ if(isset($_GET['id'])){
 if(isset($_POST['add_comment'])){
    adding_comment();
 }
+
+//this is the view_item url without mod_rewrite
+$home_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -114,6 +120,7 @@ if(isset($_POST['add_comment'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <base href="<?= $home_url ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>product name here</title>
 </head>
@@ -144,7 +151,7 @@ if(isset($_POST['add_comment'])){
         <?php 
         if($row['image']):
             $folder = "./uploads/". $row['image']; ?>
-            <img src="<?= $folder ?>" alt="iamge here">
+            <img src="<?= $folder ?>" alt="image here">
         <?php endif ?>
         </div>
         <div>

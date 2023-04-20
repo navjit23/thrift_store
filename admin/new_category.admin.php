@@ -158,6 +158,7 @@ function loading_categories(){
 </div>
 
 
+<?php include_once 'footer.admin.php' ?>
 
 </body>
 </html>

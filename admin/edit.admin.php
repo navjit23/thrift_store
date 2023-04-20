@@ -77,6 +77,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $current_image_path = filter_input(INPUT_POST, 'current_image_path', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     $filename = $_FILES['new_image']['name'];
+    $file_filename        = $_FILES['new_image']['name'];
+    $temporary_file_path  = $_FILES['new_image']['tmp_name']; 
     
 
     // build a sql query with placeholders
@@ -88,8 +90,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         unlink($current_image_path);
     }
 
-    if(trim($filename) != '' ){
-        
+    if(trim($filename) != '' &&  file_is_an_image($temporary_file_path, $file_filename) ){
+        echo"sssssssss";
         $query .= "UPDATE products SET image= :image WHERE product_id= :id;";
     }
 
@@ -109,7 +111,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $statement->bindValue(':description', $description);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
-    if(trim($filename) != '' ){
+    if(trim($filename) !== '' && file_is_an_image($temporary_file_path, $file_filename)){
+        echo"aAaa";
         $statement->bindValue(':image', $filename);
     }
 
@@ -137,9 +140,10 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
                 else{
                     //here should be a prompt and after wards normal file uploaded
                     
-                    echo"<script> alert('The file was not uploaded because it was not an image. ') </script>";
-                    header("location: ../index.php");
+                    echo "<script> alert('The file was not uploaded because it was not an image. ') </script>";
+                    header ("location: ../index.php?error='img_no_upload");
                     exit();
+                    
                 }
             }
             else{

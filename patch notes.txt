@@ -11,19 +11,17 @@ CURRENTLY WORKING ON:
 
 fix bugs: 
 
+edit it passes imageness
+SANITIZE THE DATA
+ADD REQUIRED FIEDLS TO EVERY FORM REQUIRED
+cannot uplaod an image at all in edit
 search types need to stick after i search
+
 NEED to work on the shop.phg to view the filtering conditions
-
-new images not added in edit.php
 error handler if no admin go to admin pagees
-
-footers
-non admin name header
-rearrange shop and viiew item things for better understanind
 MAKE THE INDEX PAGE BETTER
-NEW ITEM WITH NO IMAGE NEEDS FIX
-RESTRORE NON PAGINATED SEARCH PAGE
 try paginated links with form and then post 
+
 
 DONE:
 description and comment in editing not loading/saving DONE
@@ -34,6 +32,17 @@ view list of avail categories in category page DONE
 can only upload png ITHINKDONE
 SHOW NUMBER OF RESULTS FOUND
 item condition and rarity 0 dont show DOE
+footers
+rearrange shop and viiew item things for better understanind
+RESTRORE NON PAGINATED SEARCH PAGE
+non admin name header
+new images not added in edit.php
+NEW ITEM WITH NO IMAGE NEEDS FIX
+CHECK WITH RELATIVE AND ABSOLUTE PATHS CUZ EVERY LINK BE BROKEN ON THE PAGES check it afeter 
+new item no prompt on fail image
+
+
+
 
 By next week
 images 6.2, 6.4 DONE, 

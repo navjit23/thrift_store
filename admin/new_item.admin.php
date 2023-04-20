@@ -125,8 +125,8 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         else{
             //here should be a prompt and after wards normal file uploaded
             upload_new_item(`NULL`);
-            echo"<script> alert('The file was not uploaded because it was not an image. ') </script>";
-            header("location: ../index.php");
+            
+            header("location: ../index.php?error='img_no_upload' ");
             exit();
         }
     }
@@ -203,5 +203,7 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
         
     </form>
 </div>
+<?php include_once 'footer.admin.php' ?>
+
 </body>
 </html>

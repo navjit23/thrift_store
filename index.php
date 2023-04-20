@@ -1,6 +1,8 @@
 <?php
 require ('scripts/connect.php');
 session_start();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -55,5 +57,12 @@ session_start();
 
 </div>
 <?php include_once 'footer.php'; ?>
+<?php
+if( array_key_exists('error', $_GET)){
+  
+        echo " <script> alert('The file was not uploaded because it was not an image. ') </script>";
+}
+
+?>
 </body>
 </html>
