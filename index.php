@@ -60,7 +60,7 @@ session_start();
 <?php
 if( array_key_exists('error', $_GET)){
   
-        echo " <script> alert('The file was not uploaded because it was not an image. ') </script>";
+        echo " <script> alert('The file was not uploaded because it was not an image. ') </script> ";
 }
 
 ?>

@@ -26,8 +26,17 @@ if(isset($_POST['delete'])){
     $statement= $db->prepare($query);
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
     if($statement->execute()){
-        echo("Success");
-        unlink($current_image_path);
+
+        //check if the image is unique
+        $unique_image = "SELECT COUNT(product_id) FROM products WHERE image LIKE :image ;";
+        $statement= $db->prepare($unique_image);
+        $statement->bindValue(':image', $current_image_path);
+        $statement->execute();
+        $product_count = $statement->fetch();
+
+        if( $product_count == 1){
+            unlink($current_image_path);
+        }
         header("Location: ../index.php");
         exit();
     } 
@@ -87,11 +96,10 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     if(isset($_POST['del_image'])){
         $query .= "UPDATE products SET image = NULL WHERE product_id=:id;";
         //  delete the image from db yet to ccheck if its unique
-        unlink($current_image_path);
+        //unlink($current_image_path);
     }
 
     if(trim($filename) != '' &&  file_is_an_image($temporary_file_path, $file_filename) ){
-        echo"sssssssss";
         $query .= "UPDATE products SET image= :image WHERE product_id= :id;";
     }
 
@@ -112,13 +120,25 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
 
     if(trim($filename) !== '' && file_is_an_image($temporary_file_path, $file_filename)){
-        echo"aAaa";
         $statement->bindValue(':image', $filename);
     }
 
      //  Execute the INSERT.
         //  execute() will check for possible SQL injection and remove if necessary
         $statement->execute();
+
+        if(isset($_POST['del_image'])){
+            //check if the image is unique
+            $unique_image = "SELECT COUNT(product_id) FROM products WHERE image LIKE :image ;";
+            $statement= $db->prepare($unique_image);
+            $statement->bindValue(':image', $current_image_path);
+            $statement->execute();
+            $product_count = $statement->fetch();
+
+            if( $product_count == 1){
+                unlink($current_image_path);
+            }
+        }
         
             
             $file_filename        = $_FILES['new_image']['name'];
@@ -138,9 +158,6 @@ if($_POST && trim($_POST['productName']) != '' && trim($_POST['price']) != '' ){
                     header("Location: ../scripts/fileresize.inc.php?path=$new_file_path&filetype=$filetype");
                 }
                 else{
-                    //here should be a prompt and after wards normal file uploaded
-                    
-                    echo "<script> alert('The file was not uploaded because it was not an image. ') </script>";
                     header ("location: ../index.php?error='img_no_upload");
                     exit();
                     
