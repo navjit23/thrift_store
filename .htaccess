@@ -3,6 +3,7 @@
 RewriteEngine on
 
 RewriteRule ((js|css|images)\/.*)$ /$1 [L,NC]
+RewriteCond %{REQUEST_URI} !\.(css)$
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

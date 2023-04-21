@@ -180,6 +180,7 @@ function loading_categories(){
 
         <?php if($row): ?>
         <h3> <?= count($row)?> Results Found !!!</h3>
+        <?php //echo ("For $search_value Sorted By $sortBy ( $sortType ) in $category_id"); ?>
         <?php foreach ($row as $product): ?>
 
         <div class=" border border-dark border-1 border-opacity-50 m-2 p-3 rounded">

@@ -26,6 +26,7 @@ session_start();
     <!-- main content--->
     <div id="main_page">
         <h2 class="orange">Kildonan MCC Thrift Store</h2>
+        <img src="image/open.jpg" alt="">
         <div>
             <p>Come and visit us Monday - Saturday, 10am - 5pm</p>
             <p>Donations will be gladly accepted Monday - Saturday 10am - 5pm</p>
@@ -33,24 +34,34 @@ session_start();
         </div>
     </div>
 
-    <div>
-        <h1>About Us</h1>
-        <h2>Reduce Reuse Donate</h2>
-
-        <div>
-            <h3>Support Local Community</h3>
+    <div class="bg-dark ">
+        <h1 class="text-white ">About Us</h1>
+        <div class="d-flex m-5">
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Reduce Reuse Donate</h3>
+            </div>
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Support Local Community</h3>
+            </div>
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Shop Environment Friendly</h3>
+            </div>
         </div>
-        <div>
-            <h3>Shop Environment Friendly</h3>
         </div>
-    </div>
 
     <div>
-        <h1>Support Programs</h1>
-        <div>
-            <h2>Hands of Hope</h2>
-            <h2>Elmwood High School</h2>
-            <h2>Riverwood House</h2>
+    <div class="bg-dark ">
+        <h1 class="text-white ">Support Programs</h1>
+        <div class="d-flex m-5">
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Hands of Hope</h3>
+            </div>
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Elmwood High School</h3>
+            </div>
+            <div class="bg-white box1 m-3 mt-0">
+                <h3>Riverwood House</h3>
+            </div>
         </div>
     </div>
 

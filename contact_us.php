@@ -14,12 +14,12 @@ require('scripts/connect.php');
     <title>Contact Us</title>
 </head>
 
-<body>
+<body id="contact_us">  
 <?php
     include_once 'header.php';
 ?>
     <!--- timing, google map, cell, mail, address, form(for suggestions)--->
-<div class="container">
+<div class="container bg-white p-5">
     <div>
         <h1>Contact Us</h1>
         <ul>

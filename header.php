@@ -5,13 +5,22 @@
 <!-- put a logo and social handles-->
 <!-- nav bar-->
 <div class="bg_nav">
+        <h1>MCC Thrift Store</h1>
+        <div class="flex logo">
+        <a href="#"><img src="image/fb.jpeg" alt=""></a>
+        <a href="#"><img src="image/ig.jpg" alt=""></a>
+        <a href="#"><img src="image/twitter.png" alt=""></a>
+        </div>
         
     </div>
-<div  id="main_navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
-    
+<div  class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
 
         <a href="index.php" class="navbar-brand">MCC Thrift Store</a>
+    
+    <button class="navbar-toggler" data-bs-toggle="collapse"
+    data-bs-target="#nav">
+        <div class="navbar-toggler-icon"></div>
         
         </button>
         <div class="collapse navbar-collapse" id="nav">

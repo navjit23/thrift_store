@@ -6,7 +6,8 @@ $error_message = "";
 if($_GET){
     if(isset($_GET['error'])){
 
-        $error = filter_input(INPUT_GET, 'error', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $error = $_GET['error'];
 
         if($error == "'empty_fields'"){
             $error_message = "You have empty fields";
@@ -39,18 +40,18 @@ if($_GET){
 <div class="container mt-5">
 <form action="scripts/login.inc.php" method="post">
     <div class="form-floating">
-        <input type="text" name="user_name" class="form-control" placeholder="Username/email">
+        <input type="text" name="user_name" class="form-control" placeholder="Username/email" required >
         <label for="user_name">User Name / Email</label>
     </div>
     <div class="form-floating">
-        <input type="password" name="pwd" class='form-control' placeholder= "Password">
+        <input type="password" name="pwd" class='form-control' placeholder= "Password" required>
         <label for="pwd">Password</label>
     </div>
     <input type="submit" class="btn btn-primary" value="Log In" name="login"> 
 </form>
 
 <?php if($_GET): ?>
-    <h3><?= $error_message ?></h3>
+    <h3 class="alert alert-danger"><?= $error_message ?></h3>
 <?php endif ?>
 </div>
 

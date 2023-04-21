@@ -14,9 +14,43 @@
 
 /* navbar image*/
 header .bg_nav{
-	background-image: url("./images/nav_bg.jpg");
+	background-image: url("./image/nav_bg.jpg");
+	background-repeat: repeat;
+	background-size:cover;
 	width: 100%;
+	height: 150px;
+	position: relative;
+}
+	.bg_nav h1{
+		font-family:Verdana, Geneva, Tahoma, sans-serif;
+		font-weight: 900;
+		font-size: 60px;
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+	.bg_nav img{
+		width: 40px;
+		mix-blend-mode:multiply;
+	}
+
+/* main page*/
+#main_page img{
+	height: 400px;
+	width: 100%;
+	border-radius: 2%
+	;
+}
+.box1{
 	height: 100px;
+	flex: 1;
+	background-color: black;
+	text-align: center;
+
+}
+.box1:hover{
+	border: 2px solid cyan;
+	width: 35%;
 }
 
 /* shop.php*/
@@ -99,4 +133,9 @@ header .bg_nav{
 /* view_item page*/
 .view_item{
 	background-color: lightcyan;
+}
+
+/* contafct us*/
+#contact_us{
+	background-image: url(image/shop.jpg);
 }

@@ -101,19 +101,19 @@ function delete_user(){
         <h2>Add a new user</h2>
 
         <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Full name ...">
+        <input type="text" class="form-control" name="name" placeholder="Full name ..." required>
 
         <label for="user_name" class="form-label">User Name</label>
-        <input type="text" class="form-control" name="user_name" placeholder="User name ...">
+        <input type="text" class="form-control" name="user_name" placeholder="User name ..." required>
 
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" name="email" placeholder="Email ...">
+        <input type="email" class="form-control" name="email" placeholder="Email ..." required>
 
         <label for="pwd" class="form-label">Password</label>
-        <input type="password" class="form-control" name="pwd" placeholder="Password ...">
+        <input type="password" class="form-control" name="pwd" placeholder="Password ..." required>
 
         <label for="pwd_repeat" class="form-label">Repeat Password</label>
-        <input type="password" class="form-control" name="pwd_repeat" placeholder=" Repeat Password ...">
+        <input type="password" class="form-control" name="pwd_repeat" placeholder=" Repeat Password ..." required>
 
         <input type="hidden" name="by_admin" value= '1'>
 

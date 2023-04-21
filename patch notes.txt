@@ -10,10 +10,9 @@ CURRENTLY WORKING ON:
 
 
 fix bugs: 
+IMAGE NAME IS NOT SANITIZED
 
 
-SANITIZE THE DATA
-ADD REQUIRED FIEDLS TO EVERY FORM REQUIRED
 search types need to stick after i search
 NEED to work on the shop.phg to view the filtering conditions
 error handler if no admin go to admin pagees
@@ -40,7 +39,9 @@ CHECK WITH RELATIVE AND ABSOLUTE PATHS CUZ EVERY LINK BE BROKEN ON THE PAGES che
 new item no prompt on fail image
 cannot uplaod an image at all in edit
 edit it passes imageness
-
+SANITIZE THE DATA
+ADD REQUIRED FIEDLS TO EVERY FORM REQUIRED
+not check for unique image during remove
 
 
 
@@ -57,4 +58,3 @@ sitting at about 70-75 marks
 9.1, 5.1, 5.2 DONE, 5.3 DONE, 5.4 5.5
 4.1, 4.2, 4.3 
 
-not check for unique image during remove
