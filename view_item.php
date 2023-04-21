@@ -14,18 +14,36 @@ if(array_key_exists('user_id', $_SESSION ) ){
     }
 }
 
+// Loading the page
+
+
+
+if(isset($_GET['id']) && isset($_GET['name'])){
+    $row = loading_page();
+    $row3 = loading_comments();    
+}
+
+
+if(isset($_POST['add_comment'])){
+   adding_comment();
+}
+
+
 
 // TO LOAD A BLOG
 function loading_page(){
     global $db;
 
     $id= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-    $blogs = "SELECT * FROM products WHERE product_id=:id ;";
+    $name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $product_name = str_replace("-", " ", $name);
+    $blogs = "SELECT * FROM products WHERE product_id=:id AND name= :name ;";
         // preparring sql for executoin
     $statement = $db->prepare($blogs);
     
         //bind
     $statement->bindValue(':id', $id, PDO::PARAM_INT);
+    $statement->bindValue(':name', $product_name);
     
         //executing sql
     $statement->execute();
@@ -66,6 +84,7 @@ function adding_comment(){
   if ($_POST['user_comment']){
 
         //sanitizing all the informatiom
+        $name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
          
         $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if(trim($user_name =='')){
@@ -90,21 +109,12 @@ function adding_comment(){
         $statement1->bindValue(':product_id', $product_id);
 
         if($statement1->execute()){
-            echo "Success";
-            header("Location: view_item.php?id=$product_id");
+            header("Refresh:0");
         }
     }
     
 }
 
-if(isset($_GET['id'])){
-    $row = loading_page();
-    $row3 = loading_comments();    
-}
-
-if(isset($_POST['add_comment'])){
-   adding_comment();
-}
 
 //this is the view_item url without mod_rewrite
 $home_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
@@ -130,6 +140,12 @@ $home_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
     include_once 'header.php';
 ?>
 <div class="container view_item">
+<?php
+if(! $row){
+    echo "<h2>No results found</h2>";
+    echo "<a href='index.php'>Cick here to go to the Home Page </a>";
+    exit();
+} ?>
 
     <?php if($_GET['id']): ?>
         <div>
@@ -204,7 +220,7 @@ $home_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
                 <input type="int" class="form-control" name="rating">
 
                 <label for="user_comment" class="form-label">Comment</label>
-                <textarea name="user_comment" class="form-control" rows="10"></textarea>
+                <textarea name="user_comment" class="form-control" rows="10" required></textarea>
 
                 <input type="hidden" name="product_id"  value=<?= $row['product_id']?> >
                 

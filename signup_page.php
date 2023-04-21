@@ -7,7 +7,7 @@ $error_message = "";
 if($_GET){
     if(isset($_GET['error'])){
 
-        $error = $_GET['error'];
+        $error = filter_input(INPUT_GET, 'error', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if($error == "'empty_fields'"){
             $error_message = "You have empty fields";

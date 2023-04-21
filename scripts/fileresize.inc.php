@@ -24,8 +24,8 @@ function imageResize($image, $filetype){
     imagedestroy($new_image);
 }
 
-$image_path = $_GET['path'];
-$filetype = $_GET['filetype'];
+$image_path = filter_input(INPUT_POST, 'path', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$filetype = filter_input(INPUT_POST, 'filetype', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 imageResize($image_path, $filetype);
 header("Location: ../index.php");
 ?>

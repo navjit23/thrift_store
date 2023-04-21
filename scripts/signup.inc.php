@@ -5,13 +5,12 @@ require_once 'user_functions.inc.php';
 if(isset($_POST['sign_up']))
 {
     // grabbing the data
-    $full_name = $_POST['name'];
-    $user_name = $_POST['user_name'];
-    $pass = $_POST['pwd'];
-    $repeat_pass = $_POST['pwd_repeat'];
-    $email = $_POST['email'];
-    $by_admin = $_POST['by_admin'];
-
+    $full_name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $pass = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $repeat_pass = filter_input(INPUT_POST, 'pwd_repeat', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $by_admin = filter_input(INPUT_POST, 'by_admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if(emptyInputSignup($full_name, $user_name, $pass, $repeat_pass, $email) ){
         header("location: ../signup_page.php?error='empty_fields'");

@@ -132,7 +132,7 @@ function loading_categories(){
     <input type="text" class="form-control" name="rename">
 
     <input type="submit" class="btn btn-primary" value="Rename Category" name="rename_category">
-    <input type="submit" class="btn btn-outline-secondary" value="Delete Category" name="delete_category">
+    <input type="submit" class="btn btn-outline-secondary" onclick="checker()" value="Delete Category" name="delete_category">
     </form>
 
 
@@ -140,7 +140,7 @@ function loading_categories(){
     <div class="container mt-5 p-3">
     <form action="new_category.admin.php" method="post" class="border border-1">
         <label for="new_category" >Category</label>
-        <input type="text" name="new_category">
+        <input type="text" name="new_category" required>
 
         <input type="submit" class="btn btn-primary"  value="Add Category" name="add_category">
         
@@ -159,6 +159,13 @@ function loading_categories(){
 
 
 <?php include_once 'footer.admin.php' ?>
-
+<script>
+    function checker(){
+        var result = confirm('Do you want to delete this category?');
+        if(result == false){
+            event.preventDefault();
+        }
+    }
+</script>
 </body>
 </html>

@@ -11,12 +11,10 @@ CURRENTLY WORKING ON:
 
 fix bugs: 
 
-edit it passes imageness
+
 SANITIZE THE DATA
 ADD REQUIRED FIEDLS TO EVERY FORM REQUIRED
-cannot uplaod an image at all in edit
 search types need to stick after i search
-
 NEED to work on the shop.phg to view the filtering conditions
 error handler if no admin go to admin pagees
 MAKE THE INDEX PAGE BETTER
@@ -40,6 +38,8 @@ new images not added in edit.php
 NEW ITEM WITH NO IMAGE NEEDS FIX
 CHECK WITH RELATIVE AND ABSOLUTE PATHS CUZ EVERY LINK BE BROKEN ON THE PAGES check it afeter 
 new item no prompt on fail image
+cannot uplaod an image at all in edit
+edit it passes imageness
 
 
 

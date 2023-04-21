@@ -4,8 +4,8 @@ require_once 'user_functions.inc.php';
 
 if(isset($_POST['login']))
 {
-    $user_name = $_POST['user_name'];
-    $pass = $_POST['pwd'];
+    $user_name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $pass = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if(emptyInputLogin($user_name, $pass) ){
         header("location: ../login_page.php?error='empty_fields'");

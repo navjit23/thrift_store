@@ -10,7 +10,8 @@ $comments = loading_comments();
 //sanitize the get aswell
 $edit_mode = false;
 if($_GET){
-if ($_GET['edit'] == true){
+    $edit = filter_input(INPUT_GET, 'edit',FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+if ($edit == true){
     $edit_mode = true;
 }
 }
@@ -109,6 +110,7 @@ function delete_comment(){
             <div class="border border-1 container"> 
         
             <h2><?= $commentData['user_name'] ?></h2>
+            <h6><?= date('F d/Y g:i a', strtotime( $commentData['date']) ) ?></h6> 
             <h4><?= $commentData['user_email'] ?></h4>
 
             <?php if($commentData['rating']!=0): ?>
@@ -117,7 +119,7 @@ function delete_comment(){
 
 
             <p><?= $commentData['comment'] ?></p>
-            <h6>date here**********</h6>
+            
 
             </div>
         <?php endforeach;
@@ -144,7 +146,7 @@ function delete_comment(){
                 <textarea name="comment" class="form-control"  rows="10" ><?= $commentData['comment'] ?></textarea>
                
                 <input type="submit" class="justify-content-center btn btn-outline-secondary" value="Edit" name="edit">
-                <input type="submit" class="justify-content-center btn btn-danger" value="Delete" name="delete">
+                <input type="submit" class="justify-content-center btn btn-danger" onclick="checker()" value="Delete" name="delete">
             </form>
 
         <?php endforeach;
@@ -158,8 +160,13 @@ function delete_comment(){
     <?php endif ?>
 </div>
 <?php include_once 'footer.admin.php' ?>
-
+<script>
+    function checker(){
+        var result = confirm('Do you want to delete this comment?');
+        if(result == false){
+            event.preventDefault();
+        }
+    }
+</script>
 </body>
-
-
 </html>

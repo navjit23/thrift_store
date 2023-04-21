@@ -23,18 +23,18 @@ $categories1 = loading_categories();
 
 // check for GET value, if true category is filtered from here
 if(array_key_exists( 'category_id', $_GET) ){
-    $categoryID = $_GET['category_id'];
+    $categoryID = filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 
 // gets executed when user clicks search 
 if($_POST){
     $result_start=0;
-    $search_value = $_POST['searchText'];
-    $sortBy = $_POST['sort_by'];
-    $sortType = $_POST['sort_type'];
+    $search_value = filter_input(INPUT_POST, 'searchText', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $sortBy = filter_input(INPUT_POST, 'sort_by', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $sortType = filter_input(INPUT_POST, 'sort_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if(! array_key_exists( 'category_id', $_GET)){
-    $categoryID = $_POST['category'];
+        $categoryID = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     $row = search_bar_filter($search_value, $sortBy, $sortType, $categoryID);

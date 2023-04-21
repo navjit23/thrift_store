@@ -8,7 +8,8 @@ if($_SESSION['user_id'] != 1){
 
 $editmode = false;
 if($_GET){
-    if ($_GET['edit'] == true){
+    $edit = filter_input(INPUT_GET, 'edit',FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    if ($edit == true){
         $editmode = true;
     }
 }
@@ -142,12 +143,20 @@ function delete_user(){
                 <?php endif ?>
                 <h6><?= $user['email'] ?></h6>
 
-                <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                <input type="submit" value="Delete" onclick="checker()" class="btn btn-danger" name="delete">
             </form>
 
         <?php endforeach ?>
     </div>
 </div>
 <?php include_once 'footer.admin.php' ?>
+<script>
+    function checker(){
+        var result = confirm('Do you want to delete this User?');
+        if(result == false){
+            event.preventDefault();
+        }
+    }
+</script>
 
 </body>
