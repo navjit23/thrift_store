@@ -4,14 +4,15 @@
 <!--- nav bar and other stuff on top-->
 <!-- put a logo and social handles-->
 <!-- nav bar-->
-<div  class="navbar navbar-expand-md navbar-dark bg-dark">
+<div class="bg_nav">
+        
+    </div>
+<div  id="main_navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
+    
     <div class="container">
 
         <a href="index.php" class="navbar-brand">MCC Thrift Store</a>
         
-        <button class="navbar-toggler" data-bs-toggle="collapse"
-        data-bs-target="#nav">
-            <div class="navbar-toggler-icon"></div>
         </button>
         <div class="collapse navbar-collapse" id="nav">
             <ul class="navbar-nav">

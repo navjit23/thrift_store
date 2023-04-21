@@ -43,12 +43,12 @@ if($_POST){
 // default page loadup with/without categories filtered
 else{
     if(array_key_exists( 'category_id', $_GET)){
-        $products = "SELECT * FROM products WHERE category_id = :category_id "; 
+        $products = "SELECT * FROM products WHERE category_id = :category_id ORDER BY date desc"; 
         $statement = $db->prepare($products);
         $statement->bindValue(':category_id', $categoryID);
     }
     else{
-        $products = "SELECT * FROM products ";
+        $products = "SELECT * FROM products ORDER BY date desc";
         $statement = $db->prepare($products);
     }
     $statement->execute();

@@ -6,5 +6,6 @@ I designed a php website (CMS) which is based on a Thrift Store
 The database is backed by phpMyAdmin
 
 All the data has been made up and would describe the products that would be used in a real life working webpage
-The images were collected from the website below and are Royalty Free:
+The images were collected from the websites below and are Royalty Free:
 ( https://www.pexels.com/royalty-free-images/ )
+( https://unsplash.com/ )

@@ -12,6 +12,13 @@
 	background-color: rgba(119, 136, 153, 0.26);
 }
 
+/* navbar image*/
+header .bg_nav{
+	background-image: url("./images/nav_bg.jpg");
+	width: 100%;
+	height: 100px;
+}
+
 /* shop.php*/
 .product_div{
 	display: flex;
