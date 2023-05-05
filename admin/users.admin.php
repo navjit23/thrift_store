@@ -49,12 +49,20 @@ function editing_users(){
     $username = filter_input(INPUT_POST, 'edit_username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $fullname = filter_input(INPUT_POST, 'edit_fullname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $edit_user_id = filter_input(INPUT_POST, 'edit_user_id', FILTER_SANITIZE_NUMBER_INT);
+    $new_pass = filter_input(INPUT_POST, 'new_pass', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    $hashed_pass = password_hash($new_pass, PASSWORD_DEFAULT);
     $edit_user = "UPDATE users SET name= :username , full_name = :fullname WHERE user_id = :user_id ;";
+    if(isset($_POST['change_pass'])){
+        $edit_user= "UPDATE users SET name= :username , full_name = :fullname, password= :password WHERE user_id = :user_id ;";
+    }
 
     $statement= $db->prepare($edit_user);
     $statement->bindValue(':user_id', $edit_user_id, PDO::PARAM_INT);
     $statement->bindValue(':username', $username);
     $statement->bindValue(':fullname', $fullname);
+    if(isset($_POST['change_pass'])){
+        $statement->bindValue(':password', $hashed_pass); 
+    }
 
     if($statement->execute()){
         echo("Success");
@@ -136,10 +144,17 @@ function delete_user(){
                         <input type="text" class="form-control" name="edit_fullname" value="<?= $user['full_name']?>" placeholder="Full name">
                         <label for="fullname" class="form-label">FullName</label>
                     </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="new_pass" >
+                        <label for="new_pass">New Password</label>
+                    </div>
+                    <label for="change_pass">Click Here if you want to Create a New Password</label>
+                    <input type="checkbox" name="change_pass" >
                     <input type="submit" value="edit" class="btn btn-outline-secondary" name="edit">
                 <?php else: ?>
                     <h2><?= $user['name']?></h2>
                     <h3><?= $user['full_name']?></h3>
+                    <h3><?php $user['password'] ?></h3>
                 <?php endif ?>
                 <h6><?= $user['email'] ?></h6>
 

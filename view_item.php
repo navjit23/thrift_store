@@ -137,7 +137,7 @@ $home_url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
 <body>
     
 <?php
-    include_once 'header.php';
+    include_once 'header.view.php';
 ?>
 <div class="container view_item">
 <?php

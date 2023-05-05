@@ -1,18 +1,4 @@
-
-
 <header>
-<!--- nav bar and other stuff on top-->
-<!-- put a logo and social handles-->
-<!-- nav bar-->
-<div class="bg_nav">
-        <h1>MCC Thrift Store</h1>
-        <div class="flex logo">
-        <a href="https://www.facebook.com/KildonanMCCThriftShop/"><img src="image/fb.jpeg" alt=""></a>
-        <a href="https://www.instagram.com/kmtswinnipeg/?hl=en"><img src="image/ig.jpg" alt=""></a>
-        <a href="https://youtu.be/dQw4w9WgXcQ"><img src="image/twitter.png" alt=""></a>
-        </div>
-        
-    </div>
 <div  class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
 
@@ -46,5 +32,4 @@
         </div>
     </div>
 </div>
-
 </header>

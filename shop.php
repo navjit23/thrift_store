@@ -133,10 +133,11 @@ function loading_categories(){
     include_once 'header.php'; ?>
 
 <div class="container">
-    <?php
-    if ($login_user): ?> 
+
+     
     <div id="search_box" class="row">
-        <form action="" method="post">
+        <form action="shop.php" method="post">
+        <?php if ($login_user): ?>
             <label for="sort_by" class="form-label">Sort By</label>
             <select name="sort_by" class="form-select-sm" >
                 <option value="date">By Date</option>
@@ -152,35 +153,40 @@ function loading_categories(){
             </select>
 
             <!-- only loads the category dropdown if there is no category already selected -->
-            <?php if(!array_key_exists( 'category_id', $_GET)): ?>
-            <label for="category">Category</label> 
+            
+            
+            
+        <?php else: ?>
+            <input type="hidden" name="sort_by" value="date">
+            <input type="hidden" name="sort_type" value="DESC">
+        <?php endif ?>
+        <label for="category">Category</label> 
             <select class="form-select-sm" name="category">
                 <option value="all_categories"> ---All Categories--- </option>
                 <?php foreach($categories1 as $category_type): ?>
                     <option value="<?= $category_type['category_id'] ?>"> <?= $category_type['category_name'] ?> </option>
                 <?php endforeach ?>
             </select>
-            <?php endif ?>
-
+            
             <input type="text" class="form-control" name="searchText" id="" placeholder="Type here to search" >
             <input type="submit" value="Search" name="search">
         </form>
-        <?php endif ?>
-
-        <div id="category_bar">
-        <a class="col" href="shop.php"><div class="col box">All categories</div></a>
-            <?php foreach ($categories1 as $category) : ?>
-                <a class="col" href="shop.php?category_id=<?= $category['category_id']?>&name=<?= $category['category_name'] ?> "><div class="col box"> <?= $category['category_name'] ?> </div></a>
-            <?php endforeach ?>
-        </div>
-    </div> 
+        
 
 
     <div id="products">
 
         <?php if($row): ?>
         <h3> <?= count($row)?> Results Found !!!</h3>
-        <?php //echo ("For $search_value Sorted By $sortBy ( $sortType ) in $category_id"); ?>
+        <?php if($_POST){
+        echo ("For ` $search_value ` Sorted By $sortBy ( $sortType ) in ");
+        if ($categoryID !="all_categories"){
+        print_r($categories1[$categoryID]['category_name']);
+        }
+        else{
+            echo "all categories";
+        }
+        } ?>
         <?php foreach ($row as $product): ?>
 
         <div class=" border border-dark border-1 border-opacity-50 m-2 p-3 rounded">
